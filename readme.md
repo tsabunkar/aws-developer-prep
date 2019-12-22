@@ -1,7 +1,7 @@
-AWS Certified Developer :
+# AWS Certified Developer :
 
 - 130 Minutes
-- 65 QUestions
+- 65 Questions
 - Results are immediate
 - Pass marks is 720 out of 1000
 - 11k Rupees
