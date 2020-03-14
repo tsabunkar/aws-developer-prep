@@ -61,3 +61,35 @@
 - SOURCE : https://serverfault.com/questions/560552/how-to-forward-godaddy-domain-to-ec2-load-balancer/560557?newreg=dc6129e6aeb041bfb59dcb93b2d075f3
 
 ---
+
+# To Create a file and store inside S3 bucket using AWS CLI
+
+- To list everything in aws buckets : \$ aws s3 ls
+  - error : Unable to locate credentials. You can configure credentials by running "aws configure".
+  - \$ aws configure
+  - To solve aws console : services > Security, Identity, & Compliance > IAM
+  - Users > Add User
+  - User name : Tejas-Dev, Access Type : Programmatic access
+  - Create Group > Group name : Dev-Group, Policy-type : AdministratorAccess
+  - Create user
+  - Download the Access KeyID and Scret Access Key
+  - Enter this acess KeyID and Scret Access Key, in CLI -> aws confifure
+- \$ aws s3 ls
+- \$ aws s3 mb s3://tsabunkarbucket (make-bucket)
+- \$ echo "hello S3 bucket from tejas" > hello.txt
+- \$ ls -l
+- \$ aws s3 cp hello.txt s3://tsabunkarbucket
+- \$ aws s3 ls s3://tsabunkarbucket
+
+- To see in AWS webiste : Services > Storage > S3
+- Link for AWS CLI : https://docs.aws.amazon.com/cli/latest/index.html
+
+## Exam Tips :
+
+- Least Privilege - Always give your users the minimum amount of access required.
+- Create Groups - Assign your users to groups. Your users will automatically inherit the permissions of the group. The groups permissions are assigned using policy documents.
+- Secret Access Key- You will see this only once. If you do not save it, you can delete the key Pair (Access key ID and Secret Access Key) and regenerate it. You will need to run aws configure again.
+- Do not use just one access key - Do not create just one access key and share that will all your developers. If someone leaves the company on bad terms, then you will need to delete the key and create a new one and every developer would then need to update their keys. instead create one key pair per developer.
+- You can use CLI on your PC- You can install the CLI on you MAC, Linux or Windows. I personally use S3 to store all my files up in the cloud
+
+---
