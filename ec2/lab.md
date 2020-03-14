@@ -24,6 +24,8 @@
 
 -- Connection Method : A Standalone SSH Client
 
+- Putty Key Gen UI is avaliable in Windows, for Linux you need to use command in /bin/bash
+- ### Using Putty Key Gen UI in Windows OS
 - NOTE : PuttyKeyGen Converts .pem files to .ppk files [bcoz putty only understand ppk file]
 - PuttyKeyGen > Load (.pem) file [file you have donwloaded while creating keyPair]
 - Save Private Key
@@ -31,8 +33,10 @@
 - Go to Putty
   - IP Address : ec2-user@18.234.38.108 [Syntax : ec2-user@<IPv4_Public_IP>]
   - Connection > SSH > Auth > Browse (.ppk) file which was generated
-
--- Connection Method : EC2 Instance Connect (browser based SSH Client)
+- ### Using command to enter into EC2 using Ubuntu:
+- Go to the file where you have donwloaded myNewKeyOar.pem file (inside downloads)
+- \$ chmod 400 myNewKeyPair.pem
+- \$ ssh -i "myNewKeyPair.pem" ec2-user@ec2-18-234-38-108.compute-1.amazonaws.com
 
 ---
 
@@ -46,7 +50,7 @@
 - \$ service httpd status
 - \$ cd /var/www/html
 - \$ nano index.html
-- (Write basic html page) [ctrl+s -> Save]
-- Browse : Public Ip Address [18.294.38.108]
+- (Write basic html page) [ctrl+x -> Save][enter]
+- Browse : Public Ip Address [http://18.234.38.108/]
 
 ---
