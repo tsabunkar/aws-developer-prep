@@ -54,3 +54,32 @@
 - Browse : Public Ip Address [http://18.234.38.108/]
 
 ---
+
+# EC2 with S3 Role Lab
+
+- Services > IAM > Roles
+- Create role > AWS Service > EC2 > Next Permission
+- (Select) AmazonS3FullAccess
+- Create role (tab) > role name : myS3AdminAccess > Create role
+- Service > EC2
+- Running Instance > Actions > Instance Settings > Attach/Replace IAM Role
+- IAM role : (select) myS3AdminAccess (IAM Role which was created) > Apply
+- Enter into AWS CLI using : ssh -i "myNewKeyPair.pem" ec2-user@ec2-18-234-38-108.compute-1.amazonaws.com (where you have mypem)
+- (Now lets not use the private key myNewKeyPair.pem role, rather use the above IAM role which was created)
+- \$ sudo su
+- \$ cd ~/.aws
+- \$ ls
+- \$ rm credentials
+- \$ cd /
+- \$ aws s3 ls
+- \$ aws s3 ls s3://tsabunkarbucket
+- \$ echo "Sabunkar2" > hello2.txt
+- \$ aws s3 cp hello2.txt s3://tsabunkarbucket
+- \$ aws s3 ls s3://tsabunkarbucket (You can see the file is uploaded in S3 bucket successfully)
+
+- EXAM TIPS :
+  - Roles allow you to not use Access Key ID's and Secret Access Keys
+  - Roles are preferred from a security perspective
+  - Roles are controlled by policies
+  - You can change a policy on a role and it will take immediate affect
+  - You can attach and detach roles to running EC2 instances without having to stop or terminate these instances.
