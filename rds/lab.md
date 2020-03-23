@@ -40,3 +40,21 @@
 - Goto Security Group
 - RDS > Security Group Rules > (Select) Inbound > Inbound Rules > Edit Inbound rules
 - Add Rule > Type : MySQL/Aurora, Source : myWebDMZ > Save Rule
+
+- Now again verify : http://3.81.110.142/connect.php
+
+---
+
+# RDS Backups
+
+- Service > RDS > DB Instances > Modify
+- Backup > (Change Backup retention period )
+
+- (Now to take resotre db to back point in time)
+- DB Instances > Actions > Restore to point in time
+- Restore Time > Custom
+
+- Snapshots > Take snapshot
+- snapshot name : mysqldbs-snap-1 > Take Snapshot
+- (Onces the snapshot is created)
+- (Select the snapshot) > Actions > Copy Snapshot > Encryption (Here you can enable the encryption)

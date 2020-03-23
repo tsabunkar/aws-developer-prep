@@ -57,3 +57,47 @@
   - NoSQL (Dynamo DB)
 - Redshift is an - OLAP (Online Analytics Processing) [used for bigdata, Businnes intelligence (B.I)]
 - Elasticache - In Memory Caching (memcahced, redis)
+
+---
+
+# RDS Backups
+
+- There are two different types of Backups for AWS:
+  - Automated Backups
+  - Database Snapshots
+
+---
+
+## Automated Backups
+
+- Automated Backups allow you to recover your db to any point in time within a "retention period"
+- The retention period can be b/w 1 and 35 days
+- Automated Backups will take a full daily snapshot and will also store transactions logs throught the day.
+- When you do a recovery, AWS will first choose the most recent daily backup, and then apply transaction logs relevant to that day. This allows you to do a point in time recovery down to a second, within the retention period.
+- Automated backups are enabled by default.
+- The backup data is stored in S3 and you get free storage space equal to the size of your db. So if you have RDS instance of 10GB, you will get 10GB worth of storage
+- Backups are taken within a defined window.
+- During the backup windows, storage I/O may be suspended while you data is being backed up and you may experience elevated latency.
+
+---
+
+## Snapshots
+
+- DB Snapshots are done manually (i.e they are user initiated.) They are stored even after you delete the original RDS instance, unlike automated backups.
+
+---
+
+# Restoring Backups
+
+- Whenever you restore either an Automatic Backup or a manual Snapshot, the restored version of the db will be a new RDS instance with a new DNS endpoint.
+
+---
+
+# Encryption
+
+- Encryption at rest is supported for MySQL, Oracle, SQL Server, PostgresSQL, MariaDB & Aurora.
+- Encryption is done using the AWS Key Managment Service (KMS) service.
+- Once your RDS instance is encrypted, the data stored at rest in the underlying storage is encrypted, as are its automated backups, read replicas, and snapshots are all encrypted.
+- At the present time, encrypting an exisiting DB instance is not supported. To use Amazon RDS encryption for an existing db, you must first create a snapshot, make a copy of that snapshot and encrypt the copy.
+
+---
