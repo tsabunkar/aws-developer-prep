@@ -103,7 +103,7 @@
 
 ---
 
-# RDS - MultiAz
+# RDS - Multi-AZ (Multi-Avaliablity Zone)
 
 - Multi-AZ RDS : Allows you to have an extact copy of your production db in another avaliability zone. AWS handles the replication for you, so when your production db is written to, this write automatically be synchronized to the standby db.
 - In the event of planned db maintaince, DB Instance failure, or an avaliablity zone failure, Amazon RDS will automatically fallover to the standby so that db operations can resume quickly without administrative intervention.
