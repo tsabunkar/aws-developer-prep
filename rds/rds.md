@@ -1,5 +1,6 @@
 # What is a relational Database ?
 
+- RDS : Relational Database Service
 - Relational DB are what most of us are all used to. They have been around since the 70's. Think of a traditional spreadhseet :
   - Database
   - Tables
@@ -101,3 +102,29 @@
 - At the present time, encrypting an exisiting DB instance is not supported. To use Amazon RDS encryption for an existing db, you must first create a snapshot, make a copy of that snapshot and encrypt the copy.
 
 ---
+
+# RDS - MultiAz
+
+- Multi-AZ RDS : Allows you to have an extact copy of your production db in another avaliability zone. AWS handles the replication for you, so when your production db is written to, this write automatically be synchronized to the standby db.
+- In the event of planned db maintaince, DB Instance failure, or an avaliablity zone failure, Amazon RDS will automatically fallover to the standby so that db operations can resume quickly without administrative intervention.
+- Multi-AZ is for Disaster Recovery only.
+- For Perfromance improvement you need read replica
+- Multi-AZ db is avaliable for : Aurora, SQL Server, Oracle, MySQL Server, PostgreSQL, MariaDB
+
+---
+
+# RDS - Read Replicas
+
+- Read replicas allow you to have a read-only copy of you production db.
+- This is achieved by using Asynchronous replication from the primary RDS instance to the read replica
+- You use read replicas primarily for very read-heavy db workload.
+- Read replica db are avaliable for : MySQL, PostgressSQL, MariaDB, Aurora
+- Read replica db is used for scaling, not for disaster recovery (or Disaster recovery use- Multi-AZ
+- Must have automatic backups turned on in order to deploy a read replica.
+- You can have up to 5 read replica copies of any db.
+- You can have read replica of read replicas (but watch out for latency).
+- Each read replica will have its own DNS end point.
+- You can have read replicas that have Multi-AZ.
+- You can create read replicas of Multi-AZ source db's.
+- Read replicas can be promoted to be thier own db's. This breaks the replication.
+- You can have a read replica in a second region.

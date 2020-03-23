@@ -58,3 +58,17 @@
 - snapshot name : mysqldbs-snap-1 > Take Snapshot
 - (Onces the snapshot is created)
 - (Select the snapshot) > Actions > Copy Snapshot > Encryption (Here you can enable the encryption)
+
+---
+
+# RDS Muti-AZ
+
+- Services > RDS > DB Instances (Select) > Modify
+- Instance specifications > Multi-AZ deployment > yes
+
+---
+
+# RDS Read Replica
+
+- Services > RDS > DB Instances (Select) > Actions > Create Read replica
+- Create read replica
