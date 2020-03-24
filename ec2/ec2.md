@@ -124,7 +124,89 @@ NOTE :
   - Classic Load Balancers- if your application stop responding, the ELB(Classic Load Balancer) responds with 504 Error. This means that the application is having issue. This could be either at web-server layer or the DB Layer. ERROR 504
 - When a Client(124.25.53.1) hits the load balancer suppose 10.0.0.23 -> now load balancer intenal hits the web sever 10.0.0.23, but we have a use-case whee we want to know to the client who had made the requst. This can be achived via - X-Forwarded-For (124.25.53.1)
 
+---
+
 EXAM Tips :
 
 - 504 Error Means the gateway had timeout. This means that the application not responding within the idle timeout period. To troubleshoot this issue : Debug your Web-serer or your DB Server
 - If you need the Ip4 Address of your end user, Look for the X-Forwarded-For Header.
+
+---
+
+COMPLETE EXAM TIPS :
+
+- On Demand - allow you to pay a fixed rate by hour (or by the second) with no commitment.
+- Reserved - provides you with a capacity reservation, and offer a significant discount on the hourly charge for an instance. 1 year or 3 year terms
+- Spot - enables you to bid whatever price you want for instance capacity, providing for even greater savings if your applications have flexible start and end times.
+- Dedicated Hosts - Physical EC2 server dedicated for your use. Dedicated Hosts can help you redice costs by allowing you to use your exisiting server-bound software licenses.
+- If a spot instnace is terminated by Amazon EC2, you will not be charged for a particular hour of usage. However, if you terminate the instance yourself, you will be charged for the complete hour in which the instance ran.
+- FIGHT DR MC PX!
+- SSD
+  - General purpose SSD: balance price and performance for a wide varitey of workloads.
+  - Provisioned IOPS SSD: Highest-performance SSD voulme for mission-critical low-latency or high-throuput workloads.
+- Magentic
+  - Throughput Optimized HDD: Low cost HDD volume designed for frequently accessed, throughput-intensive workloads.
+  - Cold HDD: Lowset cost HDD volumen designed for less frequently accessed workloads
+  - Magentic: Previous Generation. Can be a boot volumne.
+- 3 Types of Load Balancer (elb- elastic load balancer)
+  - Application load Balancer
+  - Network Load Balancer
+  - Classic Load Balancer
+- 504 Error means the gateway has timed out. This means that the application not responding within the idle timeout period.
+  - trobule shoot the application not. Is it the web server or db server ?
+- If you need th Ipv4 address of you end user, look for the X-Forwaded-For header.
+- Route 53 is amazons DNS Service
+- Allows you to map your domanin names to
+  - EC2 Instances
+  - Load balancers
+  - S3 buckets
+- Least Privilege: Always give your users the minimum amount of access required.
+- Create Groups: Assign your users to groups. Your users will automatically inherit the permissions of the groups. The groups permissions are assigned using policy documents.
+- Secret Access Key: You will see this only once. If you do not save it, you can delete the Key Pair (Access Key ID and Secret Access Key) and regenerate it. You will need to run aws configure again.
+- Do not use just once access key: Do not create just one access key and share that with all your developers. If someone leaves the company on bad terms, then you will need to delete the key and create a new one and every developer would then need to update their keys. Instead create one key pair per developer.
+- You can use the CLI on your PC: you can install the CLI on your MAC, Linux or PC. I should use S3 to store all my files up in the cloud.
+- Roles allow you to not use Access Key ID's and Secret Access Keys
+- Roles are perferred from a security perspective.
+- Roles are controlled by policies.
+- You can change a policy on a role and it will take immediate affect
+- You can attach and detach roles to running EC2 instances without having to stop or terminate these instances.
+- You can encrypt the root device volume (the volume the OS is installed on) using OS level encryption.
+- You can encrypt the root device volume by first taking a snapshot of that volume, and then creating a copy of that snap with encryption. You can then make an AMI of this snap and deploy the encrypted root device volumne.
+- You can encrypt additional attached volumes using the console, CLI or API
+- RDS : OLTP (Online transaction processing)
+  - SQL
+    - MySQL
+    - PostgresSQL
+    - Oracle
+    - Aurora
+    - MariaDB
+  - NoSQL
+    - DynamoDB
+- Redshift : OLAP (Online Analytical Processing) [Dataware housing service]
+- Elasticcache - In Memeory Caching
+  - Memcached
+  - Redis
+- Multi-AZ is for Disaster Recovery only. It is not primarly used for improving performance. For performance improvement you need Read Replicas.
+- Read Replica DB
+  - Used for scaling, not for disaster Management
+  - Must have automatic backups turned on in order to deply a read replica.
+  - You can have up to 5 read replica copies of any db's.
+  - You can have read replicas of read replicas (but watch out for latency).
+  - Each read replica will have it own DNS endpoint.
+  - You can have read replicas that have Mult-AZ.
+  - You can create read replicas of Multi-AX source db's.
+  - Read replicas can be promoted to be their own db's. This breaks the replication.
+- You can have a read replica in a second region (for MySQL and MariaDB)
+- Typically, you will be given a scenario where a particular db is under stress/load. You may be asked which service you should use to alleivate this. (Elasticache if your db is read-heavy)
+- Elasticache is good choice if your db is particularly read-heavy and not prone to frequent changing.
+- Redshift is a good answer if the reason your db is feeling stress bcoz - Management keep running OLAP transactions on it etc.
+- Use Memcached if
+  - Object caching is your primary goal
+  - You want to keep things as simple as possible.
+  - You want to scale your cahce horizontally (scale out)
+- Use Redis if
+  - You have advanced data types, such as lists, hashes and sets
+  - You are doing data sorting and ranking (such as leader-boards)
+  - Data perisitence
+  - Multi AZ
+  - Pub/Sub capabilites are needed.
