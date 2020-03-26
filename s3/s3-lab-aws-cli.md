@@ -4,7 +4,7 @@
 - List all your buckets: \$ aws s3 ls
 - To List all files & folders inside Specific bucket: \$ aws s3 ls s3://tsabunkar-dummy
 - Delete a Bucket: \$ aws s3 rb s3://tsabunkar-dummy
-- Force delete bucket (subfolders & files in it): \$ aws s3 rb s3://bucket-name --force
+- Force delete bucket (subfolders & files in it): \$ aws s3 rb s3://tsabunkar-dummy --force
 
 - Copy file to S3 bucket:
 
@@ -45,3 +45,13 @@ Syntax :
 - aws s3 mv <src> <dest>
 - aws s3 rm <path>
 - aws s3 sync <source> <target> [--options]
+
+---
+
+# Advance s3 commands
+
+- \$ aws s3 rm --recursive s3://tsabunkar-dummy/ (Remove all the previous files inside bucket)
+- \$ aws s3 cp --recursive dist/portfolio/ s3://tsabunkar-dummy/ --acl public-read
+  (--acl public-read ==> assuming your S3 bucket is configured to be publicly readable, this will ensure that the uploaded files are too.)
+
+---
