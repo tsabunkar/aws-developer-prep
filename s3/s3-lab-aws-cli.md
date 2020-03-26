@@ -36,3 +36,12 @@
 ---
 
 Resource : https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html
+
+---
+
+Syntax :
+
+- aws s3 cp <src> <dest>
+- aws s3 mv <src> <dest>
+- aws s3 rm <path>
+- aws s3 sync <source> <target> [--options]
