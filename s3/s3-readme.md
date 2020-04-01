@@ -106,3 +106,15 @@
     - Transfer Acceleration
 - Successful uploads will generate a HTTP 200 status code - when you use the CLI or API
 - Make sue you read the S3 FAQ: https://aws.amazon.com/s3/faqs
+
+---
+
+# Securing Your Buckets
+
+- By default, all newly created buckets are PRIVATE.
+- You can set up access control to your buckets using:
+  - Bucket Policies - Applied at an object level.
+  - Access Control Lists - Applied at an object level.
+- S3 buckets can be configured to create access logs, which log all requests made to the S3 bucket. These logs can be written to another bucket.
+
+---

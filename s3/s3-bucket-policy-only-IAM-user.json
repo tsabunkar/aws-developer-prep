@@ -1,0 +1,15 @@
+{
+  "Id": "Policy1585715266928",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1585715214896",
+      "Action": ["s3:GetBucketPolicy"],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::tsabunkar-test-bucket",
+      "Principal": {
+        "AWS": ["arn:aws:iam::494039644227:user/Tom"]
+      }
+    }
+  ]
+}
