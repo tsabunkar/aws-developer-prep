@@ -93,3 +93,5 @@
 - You can use CLI on your PC- You can install the CLI on you MAC, Linux or Windows. I personally use S3 to store all my files up in the cloud
 
 ---
+
+# NOTE: If you have opted to host the route 53 zone - You will be charged 0.59\$/month
