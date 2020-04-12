@@ -118,3 +118,60 @@
 - S3 buckets can be configured to create access logs, which log all requests made to the S3 bucket. These logs can be written to another bucket.
 
 ---
+
+# S3 Encryption
+
+- In Transit
+  - SSL/TLS
+- Encryption at Rest:
+  - Server Side Encryption
+    - S3 Managed Keys -> SSE-S3 (AWS is manageing your keys/encryption)
+    - AWS key Management Service, Managed Keys, SSE-KMS
+    - Server Side Encryption with customer Provided Keys -> SSE-C (Your manageing the keys)
+  - Client Side Encryption (we encrypt our files before uploading to S3)
+- Enforcing Encryption on S3 buckets
+  - Every time a file is uploaded to S3, a PUT request is initiated.
+  - This is what PUT request looks like:
+    - PUT /myFile HTTP/1.1
+      Host: myBucket.s3.am...
+      Date: Wed,..
+      Authorization: authorization string
+      Content-Type: text/plain
+      Content-Length: 27364
+      x-amzz-meta-author: Faye
+      Except: 100-continue
+- If the file is to be encrypted at upload time, the x-amz-server-side-encryption parameter will be included in the request header.
+- Two options are currently avaliable:
+  - x-amz-server-side-encryption: AES256 (SSE-S3 - S3 Managed keys)
+  - x-amz-server-side-encryption: ams-kms (SSE-KMS - KMS Managed keys)
+- When this parameter is included in the header of the PUT request, it tells S3 to encrypt the object at the time of upload, using the specified encryption method.
+- You can enforce the use of Server Side Encryption by using a Bucket Policy which denies any S3 PUT request which doesn't include the x-amz-server-side-encryption parameter in the request header.
+- The following request tells S3 to encrypt the file using SSE-S3 (AES 256) at the time of upload:
+  - PUT /myFile HTTP/1.1
+    Host: myBucket.s3.am...
+    Date: Wed,..
+    Authorization: authorization string
+    Content-Type: text/plain
+    Content-Length: 27364
+    x-amzz-meta-author: Faye
+    Except: 100-continue
+    x-amz-server-side-encryption: AES256
+
+---
+
+# EXAM TIPS S3 Encryption
+
+- Two S3 Encryption
+  - Encryption In-Transit
+  - Encryption at Rest
+- Encryption In-Transit
+  - SSL/TLS (HTTPS)
+- Encryption At Rest
+  - Server Side Encryption
+    - SSE-S3
+    - SSE-KMS
+    - SSE-C
+  - Client Side Encryption
+- If you want to enforce the use of encryption for your files stored in S3, use an S3 Bucket Policy to deny all PUT requests that don't include the x-amz-server-side-encryption parameter in the request header.
+
+---
