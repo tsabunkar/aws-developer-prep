@@ -79,3 +79,47 @@
 - Set properties (Section) > Encryption: Amazon S3 master-key
 - Next > Upload
 - (When we have uploaded the file, It failed > View Details : Forbidden)
+
+---
+
+# CORS Configuration Lab
+
+- (Allowing Code/resource which is one s3 bucket to access/reference code/resource which is another S3 bucket)
+- Create Bucket
+- Bucket Name : tsabunkar-myindex-website
+- Bucket settings for Block Public Access : (de-select) Block all public access
+- Create Bucket
+- (Select) tsabunkar-myindex-website
+- Properties > Static website hosting > Use this bucket to host a website
+  - Index document: index.html
+  - Error document: error.html
+  - Save
+- (Upload the files present inside -> ./cors-s3-bucket/bucket-1)
+- Set permissions > Grant public read access to this object(s)
+- Next > Upload
+- Goto Properties > Static website hosting > (Click on url endpoint) http://tsabunkar-myindex-website.s3-website-us-east-1.amazonaws.com
+
+## Now we want to access this bucket from Another bucket
+
+- Create Bucket
+- Bucket Name : tsabunkar-mycors-testbucket
+- Bucket settings for Block Public Access : (de-select) Block all public access
+- Create Bucket
+- (Select) tsabunkar-mycors-testbucket
+- Properties > Static website hosting > Use this bucket to host a website
+  - Index document: index.html
+  - Error document: error.html
+  - Save
+- (Upload the files present inside -> ./cors-s3-bucket/bucket-2)
+- Set permissions > Grant public read access to this object(s)
+- Next > Upload
+- Goto Properties > Static website hosting > (Click on url endpoint) http://tsabunkar-mycors-testbucket.s3-website-us-east-1.amazonaws.com/loadpage.html
+- (Copy above url)
+- (paste into - tsabunkar-myindex-website buckets index.html file inside .load() method) [check ./cors-s3-bucket/index.html file] ==> Upload/Replace this modified index.html file into bucket-1/tsabunkar-myindex-website
+- (Now if we visit bucket-1 index.html page - http://tsabunkar-myindex-website.s3-website-us-east-1.amazonaws.com , we can only see- index.html file, but it is not able to load the content from our second bucket ==> This is bcoz CORS issue)
+- (To solve this issue- Need to add CORS configuration in bucket-2)
+- (Goto bucket-2) tsabunkar-mycors-testbucket > Permission > CORS Configuration
+- Add the CORS Configuration as mentioned : ./cors-s3-bucket/CORS_Configuration.txt
+- Save
+
+---
