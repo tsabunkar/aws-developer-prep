@@ -1,0 +1,18 @@
+{
+  "Id": "Policy1586746960749",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1586746950656",
+      "Action": ["s3:PutObject"],
+      "Effect": "Deny",
+      "Resource": "arn:aws:s3:::tsabunkar-encrypted-files/*",
+      "Condition": {
+        "StringNotEquals": {
+          "s3:x-amz-server-side-encryption": "aws:kms"
+        }
+      },
+      "Principal": "*"
+    }
+  ]
+}
