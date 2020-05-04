@@ -23,7 +23,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-wa
 - Install aws cli locally in ur linux :
   - \$ cd ~/tejas/other-apps/aws
   - \$ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  - \$ unzip awscliv2.zip
+  - \$ unzip awscliv2.zip (Type: A)
   - \$ cd aws
   - \$ sudo ./install
   - \$ aws --version
@@ -42,5 +42,10 @@ https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-wa
     - Default region name: us-east-1 [US East (N. Virginia)]
     - Default output format: json
   - \$ aws s3 ls
+
+REF:
+
+- https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
+- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
 
 ---

@@ -175,3 +175,97 @@
 - If you want to enforce the use of encryption for your files stored in S3, use an S3 Bucket Policy to deny all PUT requests that don't include the x-amz-server-side-encryption parameter in the request header.
 
 ---
+
+# S3 Performance Optimization
+
+- S3 is designed to support very high request rates. However, if your S3 buckets are routinely receiving > 100 PUT / LIST / DELETE or > 300 GET request per second, then there are some best practice guidelines that will help optimize S3 performance.
+- The guidance is basd on the type of workload you are running:
+  - GET-Intensive Workloads:
+    - use cloudfront content delivery service to get best performance. cloudfront will cache your most frequently accessed objects and will reduce latency for your GET requests.
+  - Mixed Request Type Workloads:
+    - A mix of GET, PUT, DELETE, GET Bucket - the key names you use for your objects can impact performance for intensive workloads
+    - S3 uses the key name to determine which partition an object will be stored in
+    - The use of sequential key names ex: names prefixed with a time stamp or alphabetical sequence increase the likelihood of having multiple objects stored on the same partition.
+    - For heavy workloads this can cause I/O issues and contention
+    - By using a random prefix to key names, you can force S3 to distribute your keys across multiple partitions, distributing the I/O workload.
+
+# Exam Tips for S3 Performance Optimization
+
+- Remeber the 2 main approaches to Performance Optimization for S3:
+  - GET-Intensive Workloads : Use CloudFront
+  - Mixed-Workloads : Avoid sequential key names for your S3 Objects. Instead, add a random prefix like a hex hash to the key name to prevent multiple objects from being stored on the same partition. (./s3key-names.png)
+- In July 2018, Amazon announced a massive increase in S3 performance
+  - request now supported
+    - 3500 put requests per second
+    - 5500 get requests per second
+  - This new increased performance negates the previous guidance to randomize your object keynames to achieve faster performance.
+  - This meands logical and sequential naming patterns can now be used without any performance implication.
+
+---
+
+# S3 Summary
+
+- Remember that S3 is Object-based: i.e. allows you to upload files.
+- Files can be from 0 Bytes to 5 TB
+- There is unlimited storage.
+- Files are stored in Buckets.
+- S3 is a UNIVERSAL NAMESPACE. That is, names must be UNIQUE globally.
+- Read after Write consistency for PUTS of new Objects.
+- Eventual Consistency for overwrite PUTS and DELETES (can take some time to propagate)
+- S3 Storage Classes/Tiers
+  - S3 (durable, immediately available, frequently accessed)
+  - S3 - IA (durable, immediately available, infrequently accessed)
+  - S3 - One Zone IA: Same as IA. However, data is stored in a single Avaliability Zone only.
+  - S3 - Reduced Redundancy Storage (data that is easily reproducible, such as thumbnails, etc)
+  - Glacier - Archived data, where you can wait 3-5 hours before accessing.
+- Remeber the core fundametnals of an S3 object:
+  - Key (name)
+  - Value (data)
+  - Version ID
+  - Metadata
+  - Subresources (used to manage bucket-specific configuration)
+    - Bucket Policies, ACLs
+    - CORS
+    - Transfer Acceleration
+- NOTE about S3:
+  - S3 is object-based storage only (for files)
+  - Not suitable to install an operating system on
+  - Successful uploads will generate a HTTP 200 status code.
+- Security:
+  - By default, all newly created buckets are PRIVATE.
+  - You can set up access control to your buckets using:
+    - Bucket Policies : Applied at a bucket level.
+    - Access Control Lists : Applied at an object level,
+  - S3 buckets can be configured to create access logs, which log all requests made to the S3 bucket. These logs can be written to another bucket.
+- Encryption:
+  - Encryption In-Transit
+    - SSL/TLS
+  - Encryption At Rest
+    - Server Side Encryption
+      - SSE-S3
+      - SSE-KMS
+      - SSE-C
+  - Client Side Encryption
+  - NOTE: Remember that we can use a bucket policy to prevent un-encrypted files from being uploaded by using creating a policy which only allows requests which include the "x-amz-server-side-encryption" parameter in the request header.
+- CORS:
+  - Cross origin resource sharing
+    - Used to enable cross origin access for your AWS resources.
+    - ex: S3 hosted webiste accessing js or image files located in another S3 bucket
+    - By default resources in one bucket cannot access resources located in another bucket.
+    - To allow this we need to configure CORS on the bucket being accessed and enabled access for the origin (bucket) attempting to access.
+    - Always use the S3 website URL, bit the regular bucket URL
+- CloudFont
+  - Edge Location: This is the location where content will be cached. This is separate to an AWS Region/AZ.
+  - Origin: This is the origin of all the files that the CDN will distribute. Origins can be an S3 bucket, an EC2 Instance, an Elastic Load Balancer or Route53.
+  - Distribution: This is the name given the CDN (distribution domain name), which consists of a collection of Edge Locations.
+    - Types of Distribution:
+      - Web Distribution : Typically used for websites.
+      - RTMP: Used for Media Streaming.
+  - NOTE:
+    - Edge locations are not just READ only - you can WRITE to them too (i.e. put an object on to them)
+    - Objects are cached for the life of the TTL (Time to Live) [Default TTL is 24hrs, Max TTL is 365 days]
+    - You can clear cached objects, but you will be charged. ==> Invalidation.
+- S3 Performance Optimization:
+  - 2 main approaches to performance optimization for S3:
+    - GET-Intensive Workloads : Use CloudFront
+    - Mixed-Workloads : Avoid sequential key names for your S3 objects. Instead, add a random prefix like a hex hash to the key name to prevent multiple object from being stored on the same partition
