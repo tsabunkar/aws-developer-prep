@@ -120,3 +120,34 @@
 - You can log results to CloudWatch
 - If you are using JS/AJAX that uses multiple domains with API Gateway, ensure that you have enabled CORS on API Gateway
 - CORS is enforced by the client by default.
+
+---
+
+# Version with Lambda
+
+- Versioning
+  - When you use versioning in AWS Lambda, you can publish one or more versions of your lambda function. As a result, you can work with different variations of your lambda function in your development workflow, such as development, beta, and production
+  - Each lambda function version has a unique Amazon Resource Name (ARN). After you publish a version, it is immutable (that is, it cannot be changed)
+  - AWS lambda maintains your latest function code in the $LATEST version. When you update your funcion code, AWS Lambda replaces the code in the $LATEST version of the Lambda function.
+- Qualified/Unqualified ARNs
+  - You can refer to this function using its Amazon Resource Name (ARN). THere are 2 ARNs associated with this initial version:
+    - Qualified ARN:
+      - The function ARN with the version suffix.
+      - $ arn:aws:lambda:aws-region:acct-id:function:helloworld:$LATEST
+    - Unqualified ARN:
+      - The function ARN without the version suffix
+      - arn:aws:lambda:aws-region:acct-id:function:helloworld
+- Alias
+  - After intially creating a lambda function (the \$LATEST version), you can publish a version 1 of it. By creating an alias named PROD that points to version 1, you can now use the PROD alias to invoke version 1 of the lambda function.
+  - Now, you can update the code (the \$LATEST version) with all of your improvements, and then publish another stable and improved version (version2). You can promote version2 to production by remapping the PROD alias so that it points to version2. If you find something wrong, you can easily roll back the production version to version1 by remapping the PROD alias so that it points to version1.
+
+---
+
+# Exam Tips fo Version Control with Lambda
+
+- Can have multiple versions of lambda functions
+- Latest version will use \$LATEST
+- Qualified version will use \$LATEST, unqualified will not have it
+- Versions are immutable in nature (Cannot be changed/edited)
+- Can split traffic using aliases to different versions
+  - NOTE: Cannot split traffic with \$LATEST, instead create an alias to latest.

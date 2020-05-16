@@ -74,3 +74,45 @@
 - Upload (these files)
 - Goto : S3 > select the bucket > Properties > Static website hosting > Endpoint : http://tsabunkarmaths.com.s3-website-us-east-1.amazonaws.com
 - Vist this index.html url
+
+---
+
+# Alias in Lambda function
+
+- Service > Lambda > Create Function > Author from scratch
+  - Function name : myNewFunction
+  - Runtime : Nodejs 12.x
+  - Execution role: Use an existing role
+    - Existing role: service-role/myLambdaRole
+  - Create function
+- Function code :
+- (change text: Hello Version-1)
+- Qualifiers > Version
+- \$LATEST --> (Show the latest code base)
+- (To create new version of our code)
+- Actions > Publish new version
+- Version description : Version 1 > Publish
+- (Thus you have created a version of your code base, we cannot edit this Version 1 code base)
+- Go to \$LATEST
+- (change text: Hello Version-2, js is best lang)
+- Actions > Publish new version
+- Version description : Version 2
+  (Thus we can see all our version of code - Version)
+- (To create alias)
+- Actions > create a new alias
+- Alias configuration
+  - Name: Version1-Old
+  - Description: This is my oldest version of code
+  - Version: (select) 1
+  - Save
+- (Thus we can see this in Aliases)
+- Creating splits between traffic
+- (You can shift traffic between two versions)
+  - Actions > Create Alias
+  - Alias configuration
+    - Name : mySplitTraffic
+    - Version: 2 , Weight (%) : 50
+    - Weighted alias
+      - Additional version : (select) 1
+      - Weight (%) : 50
+- (NOTE: You cannot create split traffic for \$LATEST version)
