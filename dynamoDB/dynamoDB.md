@@ -63,3 +63,6 @@
 - Supports both document and key-value data models
 - Supported document formats are JSON, HTML, XML
 - 2 Types of Primary Key- Partition Key and Composite Key (Partition Key + Sort Key)
+- 2 consistency models : Strongly Consistent / Eventually Consistent
+- Access is controlled using IAM Policies
+- Fine grained access control using IAM Condition Parameter : dynamodb:LeadingKeys to allow users to access only the items where the partition key value matched their user ID
