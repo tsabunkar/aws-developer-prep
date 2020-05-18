@@ -183,3 +183,48 @@
 - API Gateway can be throttled
   - Default limits are 10,000 RPS or 5000 concurrently
 - You can configure API Gateway as a SOAP webservice passthrough
+
+---
+
+# Summary
+
+- Lambda
+  - Lambda scales out (not up) automatically
+  - Lambda functions are independent, 1 event = 1 function
+  - Lambda is serverless
+  - Know what services are serverless
+  - Lambda functions can trigger other lambda functions, 1 event can = x functions if functions trigger other functions
+  - Architectures can get extremely complicated, AWS X-ray allows you to debug what is happening
+  - Lambda can do things globally, you can use it to back up S3 buckets to other S3 buckets etc
+  - Know your triggers
+- API Gateway
+  - Remeber what API Gateway is at a high level
+  - API Gateway has caching capabilities to increase performance
+  - API Gateway is low cost and scales automatically
+  - You can throttle API Gateway to prevent attacks
+  - You can log results to CloudWatch
+  - If you are using Javascript/AJAX that uses multiple domains with API Gateway, ensure that you have enabled CORS on API Gateway
+  - CORS is enforced by the client.
+- Version Control
+  - Can have multiple versions of lambda functions
+  - Latest version will uses \$LATEST
+  - Qualified version will use \$LATEST, unqualified will not have it
+  - Versions are immutable in nature(Cannot be changed/modified/edited)
+  - Can split traffic using aliases to different versions
+    - Cannot split traffic with \$LATEST, instead create an alias to latest.
+- Step Functions
+  - Great way to visualize your severless application
+  - Step functions automatically triggers and tracks each step.
+  - Step functions logs the state of each step so if something goes wrong you can track what went wrong and where.
+- X-Ray
+  - X-Ray SDK provides:
+    - Interceptors to add to your code to trace incoming HTTP requests
+    - Client handlers to instrument AWS SDK client that your applications uses to call other AWS services.
+    - An HTTP client to use to instrument calls to other internal and extenral HTTP web services.
+  - X-Ray Integrates with following AWS Services:
+    - Elastic Load balancing
+    - AWS Lambda
+    - Amazon API Gateway
+    - Amazon Elastic Compute Cloud
+    - AWS Elastic Beanstalk
+  - Lnguages integrates: Java, GO, Nodejs, pythong, Ruby, .net
