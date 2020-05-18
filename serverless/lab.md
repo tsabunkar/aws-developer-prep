@@ -116,3 +116,17 @@
       - Additional version : (select) 1
       - Weight (%) : 50
 - (NOTE: You cannot create split traffic for \$LATEST version)
+
+---
+
+# Advance API Gateway
+
+- Service > Networking & Content Delivery > API Gateway
+- Create API
+- Goto :
+  - REST API
+    (Develop a REST API where you gain complete control over the request and response along with API management capabilities.)
+  - Import
+- Import from Swagger or Open API 3
+- Select Swagger file
+  (Thus, we can import exisiting Swagger file while creating API Gateway)
