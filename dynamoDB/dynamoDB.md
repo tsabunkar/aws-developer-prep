@@ -66,3 +66,42 @@
 - 2 consistency models : Strongly Consistent / Eventually Consistent
 - Access is controlled using IAM Policies
 - Fine grained access control using IAM Condition Parameter : dynamodb:LeadingKeys to allow users to access only the items where the partition key value matched their user ID
+
+---
+
+# What is Index ?
+
+- In SQL database, an index is a data structure which allows to you perform fast queries on sepcific columns in a table. You select the columns that you want included in the index and run your searches on the index- rather than on the entire dataset.
+- In DynamoDB, 2 Types of Index are supported to help speed-up your dynamoDB queries:
+  - Local Secondary Index
+  - Global Secondary Index
+- Local Secondary Index
+  - Can only be created when you are creating your table.
+  - You cannot add, remove or modify it later.
+  - It has the same Partition Key as your original table
+  - But a different Sort Key
+  - Gives you a different view of your data, organised according to an alternative Sort Key.
+  - Any queries based on this Sort Key are much faster using the index that the main table.
+  - Ex: Partition Key : UserID, Sort Key : Account creation date
+- Gloabl Secondary Index
+  - You can create when you create your table, or add it later
+  - Different Partition Key as well as a Different Sort Key
+  - So gives a completely different view of the data
+  - Speeds up any queries relating to this alternative Partition and Sort Key
+  - ex: Partition Key: email address, Sort Key :last log-in date
+
+---
+
+# Examp Tip for DynamoDB Indexes
+
+- Indexes enable fast queries on specific data columns.
+- Give you a different view of your data, based on alternative Partition/Sort Keys
+- Important to undestand the differences.
+- Local Secondary Index
+  - Must be create when you create your table
+  - Same Partition key as your table
+  - Different Sort Key
+- Global Secondary Index
+  - Can create any time
+  - Different Partition Key
+  - Different Sort Key
