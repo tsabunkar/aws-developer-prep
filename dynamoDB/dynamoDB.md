@@ -105,3 +105,15 @@
   - Can create any time
   - Different Partition Key
   - Different Sort Key
+
+---
+
+# Scan v/s Query API
+
+- What is query
+  - A Query operation finds items in a table based on the Primary Key attribute and a distinct value to search for
+  - ex: select an item where the UserID is equal to 212, will select all the attributes for that item, ex first name, surname or email etc
+  - Use an optional Sort Key name and value to refine the results.
+  - ex: if your Sort Key is a timestamp, you can refine the query to only select items with a timestamp of the last 7 days.
+  - By default, a query returns all the attributes for the items but you can use the ProjecionExpression parameter if you want the query to only return the specific attributes you want.
+  - ex: if you only want to see the email address rathern than all the attributes
