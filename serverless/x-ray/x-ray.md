@@ -35,6 +35,7 @@
 - https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/newApplication?applicationName=scorekeep&solutionStackName=Java
 - Create application
 - (done) click -> http://scorekeep-env.eba-wjpmzahf.us-east-1.elasticbeanstalk.com/
+- (This will check the health of EC2)
 
 ---
 
@@ -52,3 +53,8 @@
   - AWS Elastic Beanstalk
 
 ---
+
+# To Terminate Elastic Bean Stalk -
+
+- Elastic Beanstalk > Environments
+- (Select the environment to terminate) -> Actions > Terminate environment
