@@ -126,6 +126,43 @@
   - You need to explicitly set the query to be strongly consistent
 
 - What is Scan
+
   - A scan operation examines every item in the table
   - Bydefault return all data attributes
   - Use the 'ProjectionExpression' Parameter to refine the scan to only return the attributes you want.
+
+- What to use Query or Scan ?
+
+  - Query is more efficient than a scan
+  - Scan dumps the entire table, then filters out the values to provide the desired result result - removing the unwanted data
+  - This adds an extra step of removing the data you don't want
+  - As the table grows, the scan operation takes longer
+  - Scan operation on a large table can use up the provisioned throughput for a large table in just a single operation
+
+- How to improve performance
+  - You can reduce the impact of a query or scan by setting a smaller page size which uses fewer read operations
+  - ex- set the page size to return 40 items
+  - Large number of smaller operations will allow other requests to succeed without throttling the db
+  - Aviod using scan operations if you can: design tables in a way that you can use the Query, Get or BatchGetItem APIs
+  - Parallel Scans
+    - By default, a scan operation processes data sequentially in returning 1MB increments before moving on to retrieve the next 1MB of data. It can only scan one partition at a time
+    - You can configure DynamoDB to use Paralled scans instead by logically dividing a table or index into segments and scanning each segment in parallel.
+    - Best to avoid paralled scans if your table or index is already incurring heavy read/wite activity from other applications
+
+---
+
+# Scan vs Query Exam Tips
+
+- A query operations finds items in a table using the PK attribute
+- You provide PK name and a distinct value to search for
+- A scan operation examines every item in the table
+- By default returns all data attributes
+- Use the ProjectionExpression parameter to refine the results
+- Query results are always sorted by the Sort Key is there is one
+- Sorted in ascending order
+- Set ScanIndexForward parameter to false to reverse the order - queries only
+- Query operation is generally more efficient than a scan
+- Reduce the impact of a query or scan by setting a smaller page size which uses fewer read operations.
+- Isolate scan operations to sepecific tables and segregate them from your mission-critical traffic
+- Try Paralled scans, rather than the default sequential scan
+- Avoid using scan operations if you can: design tables in a way that you can use the Query, Get or BatchGetItem APIs

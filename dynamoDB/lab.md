@@ -46,3 +46,19 @@
 
 - Can also use EC2 CLI to run sql queries
   - \$ aws dynamodb get-item --table-name ProductCatalog --region us-east-1 --key '{"Id":{"N":"205"}}'
+
+---
+
+# Scan v/s Query API
+
+- Service > Database > DyanmoDB
+- Tables Section
+- (Select) ProductCatalog
+- Items tab
+- (Select dropdown) Query
+- [Play with how you can search/query particular id]
+- (Select dropdown) Scan
+- Start Search - (Entier table)
+- [play with Add filter]
+  - Price, Number, > , 100
+  - Start Search
