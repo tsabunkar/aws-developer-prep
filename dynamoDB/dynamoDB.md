@@ -169,12 +169,12 @@
 
 ---
 
-# DynamoDB Read and Write Capcity Units
+# DynamoDB Read and Write Capacity Units
 
-- DyanmoDB Provisioned Throughput is meashred in Capcity units.
+- DyanmoDB Provisioned Throughput is meashred in Capacity units.
 - When you create your table, you specify your requirements in terms of Read Capacity Units and Write Capacity Units.
 - 1 x Write Capacity Unit = 1 x 1KB Write per second
-- 1 x Read Capcity Unit = 1 x Storngly Consitent Read of 4KB per second (or)
+- 1 x Read Capacity Unit = 1 x Storngly Consitent Read of 4KB per second (or)
   2 x Eventaully Consistent Reads of 4 KB per second (Default)
 - DynamoDB Example Configuration
   - Table with 5 x Read Capacity Units and 5 x Write Capacity Units
@@ -202,12 +202,63 @@
   - You want to write 100 items per second
   - Each item 512 bytes in size
   - Solution :
-    - First, calculation how many Capacity Units for each write: Size of each item / 1KB (for Write Capcity Units) [512 bytes / 1KB = 0.5]
+    - First, calculation how many Capacity Units for each write: Size of each item / 1KB (for Write Capacity Units) [512 bytes / 1KB = 0.5]
     - Rounded-up to the nearest whole number, each write will need 1 x Write Capacity Unit per write operation
-    - Multiplies by the number of write per second = 100 write Capcity Units required
+    - Multiplies by the number of write per second = 100 write Capacity Units required
 - Exam Tips:
   - Provisioned Throughput is measured in Capacity Units
   - 1 x Write Capacity Unit = 1 x 1KB Write per second
   - 1 x Read Capacity Unit = 1 x 4KB Strongly Consistent Read (or) 2 x 4KB Eventually Consistent Reads per second
+
+---
+
+# DynamoDB On-Demand Capacity Options
+
+- Charges apply for Reading, Writing and Storing data om 2018
+- With On-Demand, you don't need to specify your requirements
+- DynamoDB instantly scales up and down based on the activity of your application
+- Great for unpredictable workloads
+- You want to pay for only what you use (pay per request), Great for Serverless stack
+
+- Which Pricing Model Should I Use
+  - On-Demand Capacity:
+    - Unknown Workloads
+    - Unpredictable application traffic
+    - You want a Pay-per-use model
+    - Spiky, short lived peaks
+  - Provisioned Capacity:
+    - You can forecast read and write capacity requirements
+    - Predictable application traffic
+    - Application traffic is consistent or increases gradually
+
+---
+
+# DynamoDB Accellorator (DAX)
+
+- What is DAX:
+  - DynamoDB Accellorator is a fully managed, clustered in-memory cache for DynamoDB
+  - Delivers up to 10x read performance improvement (only for Read performance)
+  - Microsecond performance for millions of requests per second
+  - Ideal for Read-Heavy and bursty workloads
+  - ex: Autcion applications, gaming and retail sites during black Friday/Christmas promotions
+- How does it work ?
+  - DAX is write-through caching service- this means data is written to the cache as well as the back end store at the same time
+  - Allows you point you DynamoDB API calls at the DAX cluster
+  - If the item you are querying is in the cache (cache hit), DAX returns the result to the application.
+  - If the item is not avaliable (cache miss) then DAX performs an Eventually Consistent GetItem operation against DynamoDB tables.
+  - Retrieval of data from DAX reduces the read load on DynamoDB tables
+  - May be able to reduce Provisioned Read Capacity
+- WHat is NOT Suitable for DAX ?
+  - Caters for Eventually Consistent reads only- so not suitable for applications that require Strongly Consistent reads
+  - Not Suitable for:
+    - Write intensive applications
+    - Applications that do not perform many reads operations
+    - Applications that do not require microsecond response times
+- DAX Exam Tips:
+  - Provided in-memory caching for DynamoDB tables
+  - Improves response times for Eventaully Consistent reads only
+  - You point your API calls the DAX cluster, instead of your table
+  - If the item you are querying is on the cache, DAX will return it; otherwise it will perform an Eventually Consistent GetItem operation to your DynamoDB table
+  - Not suitable for write-intensive applications or applications that require Strongly Consistent reads
 
 ---
