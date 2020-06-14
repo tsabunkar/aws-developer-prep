@@ -166,3 +166,48 @@
 - Isolate scan operations to sepecific tables and segregate them from your mission-critical traffic
 - Try Paralled scans, rather than the default sequential scan
 - Avoid using scan operations if you can: design tables in a way that you can use the Query, Get or BatchGetItem APIs
+
+---
+
+# DynamoDB Read and Write Capcity Units
+
+- DyanmoDB Provisioned Throughput is meashred in Capcity units.
+- When you create your table, you specify your requirements in terms of Read Capacity Units and Write Capacity Units.
+- 1 x Write Capacity Unit = 1 x 1KB Write per second
+- 1 x Read Capcity Unit = 1 x Storngly Consitent Read of 4KB per second (or)
+  2 x Eventaully Consistent Reads of 4 KB per second (Default)
+- DynamoDB Example Configuration
+  - Table with 5 x Read Capacity Units and 5 x Write Capacity Units
+  - This configuration will be able to perform:
+    - 5 x 4KB Strongly Consistent reads = 20KB per second
+    - Twice as many Eventaully Consistent = 40KN
+    - 5 x 1KB Writes = 5KB per second
+  - If your application reads or writes larger items it will consume more capacity units and will cost you more as well
+- Strongly Consistent Read Calculation Problem
+  - Your application needs to read 80 items (table rows) per second.
+  - Each item 3KB in size
+  - You need Strongly Consistent Reads
+  - Solution :
+    - First, calculate how many Read Capacity Units needed for each read: Size of each item / 4KB (3KB / 4KB = 0.75)
+    - Rounded-up to the nearest whole number, each read will need 1 x Read Capacity Unit per read operation
+    - Multiplied by the number of reads per second = 80 Read Capacity Units required
+- Eventually Consistent Read Calculation Problem
+  - What if you Eventually Consistent Read ?
+  - You do the same calculation. However as this is for Eventually Consistent reads and you 2 x 4KB reads per second- or _double_ the throughtput of Strongly Consistent reads.
+  - Size of each item / 4KB
+    - 3KB / 4KB = 0.75 Round-up to the nearest whole number = 1
+    - Multiply by the number of reads per second = 80
+  - Divide 80 by 2, so you only need 40 Read Capacity Units for Eventually Consistent reads
+- Write Capacity Units Calculation
+  - You want to write 100 items per second
+  - Each item 512 bytes in size
+  - Solution :
+    - First, calculation how many Capacity Units for each write: Size of each item / 1KB (for Write Capcity Units) [512 bytes / 1KB = 0.5]
+    - Rounded-up to the nearest whole number, each write will need 1 x Write Capacity Unit per write operation
+    - Multiplies by the number of write per second = 100 write Capcity Units required
+- Exam Tips:
+  - Provisioned Throughput is measured in Capacity Units
+  - 1 x Write Capacity Unit = 1 x 1KB Write per second
+  - 1 x Read Capacity Unit = 1 x 4KB Strongly Consistent Read (or) 2 x 4KB Eventually Consistent Reads per second
+
+---
