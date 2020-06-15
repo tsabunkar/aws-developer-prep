@@ -378,3 +378,89 @@
   - Can be used as an event source for lambda so you can create applications which take actions based on events in your DynamoDB table
 
 ---
+
+# Provsioned Throughput Exceed & Exponential Backoff
+
+- ProvisionedThroughputExceededException
+- Your request rate is too high for the read/write capacity provisioned on your DynamoDB table
+- SDK will automatically retries the requests untill successful
+- If you are not using the SDK you can:
+  - Reduce request frequency
+  - Use Exponential Backoff
+- Exponential Backoff:
+  - Many component in a network can generate errors due to being overloaded by too many requests at the same time
+  - In addition to simple retries all AWS SDKs use Exponential Backoff
+  - Progressively longer waits b/w consecutive retries ex- 50ms, 100ms, 200ms for improved flow control
+  - If after 1 minute this doesn't work, your request size may be exceeding the throughput for your read/write capacity
+- Exam Tips:
+  - If you see a ProvisionedThroughputExceededException, this means the number of requests is too high
+  - Exponential Backoff improves flow by retrying requests using progressively longer waits
+  - This is not just true for DynamoDB, Exponential Backoff is a feature of every AWS SDK and applies to many services within AWS ex- S3 buckets, Cloudformation, SES
+
+---
+
+# DynamoDB Summary
+
+- Amazon DynamoDB is a low-latency NoSQL db
+- Consists of Tables, Items and Attributes
+- Supports both document and key-value data models
+- Supported document formats are JSON, HTML, XML
+- 2 types of PK: Parition Key and combination of PK + Sort Key (Composite Key)
+- 2 Consistency models : Strongly Consistent / Eventually Consistent
+- Access is controlled using IAM policies
+- Fine grained access control using IAM Condition parameter: dynamodb:LeadingKeys to allow users to access only the itmes where the partition key value matched their user ID
+- DynamoDB Indexes
+  - Indexes enables fast queries on specific data columns
+  - Given you a different view of your data based on alternative Partition/Sort Keys
+  - Difference b/w Local Secondary index v/s Global Secondary Index
+  - Local Secondary Index
+    - Must be created at when you create your table
+    - Same partition key as your table
+    - Different Sort Key
+  - Global Secondary Index
+    - Can create anytime at table creation or after
+    - Different Partition Key
+    - Different Sort Key
+- Scan v/s Query
+  - A Query operations finds items in atable using only the PK attribute
+  - You provide the PK name and a distinct value to search for
+  - A scan operation examines every item in the table
+    - bydefault, returns all data attribute
+  - Use the ProjectionExpression parameter to refine the results
+  - Query results are always sorted by the Sort Key (if there is one)
+  - Sorted in ascending order
+  - Set ScanIndexForward parameter to false to reverse the order-queries only
+  - Query operation is generally more efficient than a Scan.
+  - Reduce the impact of a query or scan by setting a smaller page size which uses fewer read operations
+  - Isolate scan oeprations to specific tables and segregate them from your mission-critical traffic
+  - Try paralled scan rahter than the default sequential scan
+  - Avoid using scan operations if you can: desing tables in a way that you can use the Query, Get ot BatchGetItem APIs
+- Provsioned Throughput
+  - Provisioned Throughput is measured in Capacity Units
+  - 1 x write capacity unit = 1 x 1KB write per second
+  - 1 x Read Capacity unit = 1 x 4KB Strongly Consitent Read or 2 x 4KB Eventually Consistent Reads per second
+  - Calaculate Write Capacity Requirements (100 x 512 byte items per second)
+    - First, calculate how many capacity units for each write: Size of each item / 1KB (for write capacity units) 512 bytes / 1KB = 0.5
+    - Rounded-up to the nearest whole number, each write will need 1 x Write Capacity unit per write operation
+    - Multiplied by the number of writes per second = 1 x 100 = 100 write capacity units required
+  - Calaculate Read Capacity Requirements (80 x 3KB items per second)
+    - First, Calculate how many capacity units for each read: size of each item / 4KB (for Read Capacity Units) 3KB/ 4KB = 0.75
+    - Rounded-up to the nearest whole number, each read will need 1 x Read Capacity Unit operation
+    - Multipled by the number of reads per second = 1 x 80 = 80 Read Capacity Units required for Strongly Consistent, but if Eventual Consistency is acceptable, divide by 2 = 40 Read Capacity Units required
+- DAX
+  - Provides in-memory caching for DynamoDB tables
+  - Improves response times for Eventually Consistent reads only
+  - You point your API calls to the DAX cluster instead of your table
+  - If the item you are querying is on the cache, DAX will return it; otherwise it will perform an Eventually Consistent GetItem operation to your DynamoDB table
+  - Not suitable for write-intensive applications or applications that require Strongly Consitent reads
+- Elasticache
+  - In-memory cache sits b/w your application and db
+  - 2 different caching strategies - Lazy loading and Write Through
+  - Elasticache Node failures not fatal, just lots of cache misses
+  - Cache miss pentaly: Initial request, query db, writing to cache
+  - Avoid stable data by implementing a TTL
+  - Write Through strategy writes data into the cache whenever there is a change to the db
+  - Data is never stable
+  - Write penalty: Each write involves a write to the cache
+  - Elasticache node failure means that data is missing untill added or updated in the db
+  - Wasted resources if most of the data is never used
