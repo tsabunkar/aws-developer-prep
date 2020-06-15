@@ -356,3 +356,25 @@
 - To converte epoch time stamp - https://www.epochconverter.com/
 
 ---
+
+# DynamoDB Streams
+
+- Time-ordered sequence of item level modifications (insert, update, delete)
+- Logs are encrypted at rest and stored for 24 hours
+- Accesses using a dedicated endpoint
+- Bydefault the PK is recorded
+- Before and After images can be captured
+- [./assets/dynamodb-streams.png]
+- Processing DynamoDB Streams
+  - Events are recorded in near real-time
+  - Applications can take actions based on contnets
+  - Event source for lambda
+  - Lambda polls the DynamoDB stream
+  - Executes Lambda code based on a DynamoDB Streams event
+  - [assets/dynamoDB-streams-trigger.png]
+- Exam Tips:
+  - Time-ordered sequence of item level modifications in your DynamoDB tables
+  - Data is stored for 24 hours only
+  - Can be used as an event source for lambda so you can create applications which take actions based on events in your DynamoDB table
+
+---
