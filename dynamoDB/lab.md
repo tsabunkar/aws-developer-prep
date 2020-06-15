@@ -62,3 +62,25 @@
 - [play with Add filter]
   - Price, Number, > , 100
   - Start Search
+
+---
+
+# DynamoDB TTL
+
+- Create DynamoDb Table
+- \$ aws iam get-user (which user is configured for this AWS account)
+- (Below commnads - [./dynamo-TTL.txt] and [items.json])
+- \$ aws dynamodb create-table --table-name SessionData --attribute-definitions \
+  AttributeName=UserID,AttributeType=N --key-schema \
+  AttributeName=UserID,KeyType=HASH \
+  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+- \$ cd /home/tejas/tejas/workspace/vsc/aws-developer-prep/dynamoDB/
+- \$ aws dynamodb batch-write-item --request-items file://items.json
+- (Goto AWS DynamoDB tables- SessionData, check items are inserted successfully)
+- (Change expirationTime value using the epochconverter)
+- items > Manage TTL
+- TTL attribute: ExpirationTime (attribute on which you want to set TTL for)
+- Run Preview > Continue
+- Overview tab -> (Check) Time to live attribute
+
+---

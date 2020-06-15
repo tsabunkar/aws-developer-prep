@@ -328,3 +328,31 @@
     - Write penalty: Each writes invovles a write to the cache
     - Elasticache node failure means that data is missing untill added or updated in the db
     - Wasted resources if most of the data is never used
+
+---
+
+# DynamoDB Transactions
+
+- ACID Transaction (Atomic, Consistent, Isolated, Durable) [these are the ideal properites for db transaction]
+- Read or write multiple items across multiple tables as an all or nothing operation
+- Check for a pre-requisite condition before writing to a table
+- kind of all or nothing transaction
+
+---
+
+# DynamoDB TTL
+
+- Time to live attribute define an expiry time for your data
+- Expired items marked for deletion
+- Great for removing irrelevant or old data:
+  - Session data
+  - Event logs
+  - Temporary data
+- Reduces cost by automatically removing data which is no longer relevant
+- TTL is expressed as epoch time (Unix time)
+- Expiration is set for 2 hours after the session began
+- When the current time is greater than the TTL, the item will be expired and marked for deletion
+- You can filter out expired items from your queries and scans
+- To converte epoch time stamp - https://www.epochconverter.com/
+
+---
