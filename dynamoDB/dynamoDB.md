@@ -262,3 +262,69 @@
   - Not suitable for write-intensive applications or applications that require Strongly Consistent reads
 
 ---
+
+# Elasticache
+
+- Elasticache is in memory cache in the cloud
+- Improves performance of web applications, allowing you to retrieve information from fast in-memory caches rather than slower disk based databases
+- Sits between your application and the database:
+  - ex: An application frequently requesting specific product information for your best selling products
+- Take the load off your db
+- Good if your db is particularly read-heavy and the data is not changing frequently
+- Improves performance for read-heavy workloads
+  - ex: Social Networking, gaming media sharing, Q&A portals
+- Requently-accessed data is stored in memory for low-latency access, improving the overall performance of your application
+- Also good for compute heavy workloads
+  - ex: recommendation engines
+- Can be used to store results of I/O intensive db queries or output of compute-intensive calculation
+- 2 Types of Elasticache
+  - Memcached
+    - widely adopted memory object caching system
+    - Multi-threaded
+    - No Multi-AZ capability in AWS
+  - Redis
+    - Open-source in-memory key-value store
+    - Supports more complex data strucutres: sorted sets and lists
+    - Supports Master / Slave replication and Mult-AZ for cross AZ redundancy
+- Caching Stragies
+  - 2 Stragies avaliable: Lazy Loading and Write-Through
+  - Lazy Loading
+    - Loads the data into the cache only when necessary
+    - If requested data is in the cache, Elasticache returns the data to the application
+    - If the data is not in the cache or has expired, Elasticache returns a null
+    - Your application then fetches the data from the db and write the data recieved into the cache so that it is avaliable next time.
+    - Advantages:
+      - Only requested data cached: Avoids filling up cache with useless data
+      - Node failures are not fatal a new empty node will just have a lot of cache misses initially
+    - Disadvantages:
+      - Cache miss penalty: Initial request Query to db writing of data to the cache
+      - Stale data - if data is only updated when there is a cache miss, it can become stale. Doesn't automatically update if the data in the db changes
+    - To remove Stale data:
+      - TTL (Time to Live):
+        - Specifies the number of seconds until the key (data) expires to avoid keeping stale data in the cache
+        - Lazy loading treats an expired key as cache miss and causes the application to retireve the data from the db and subsequently write the data into the cache with a new TTL
+        - Does not eliminate stale data - but helps to avoid it
+  - Write-through:
+    - Adds or updates data to the cache whenever data is written to the db
+    - Advantages:
+      - Data in the cache never stale
+      - Users are generally more tolerant of additional latency when updating data than when retrieving it.
+    - Disadvantages:
+      - Write pentaly: Every write involves a write to the cache as well as a write to the db
+      - If a node fails and a new one is spun up, data is missing untill added or updated in the db (mitigate by implementing lazy loading in conjunction with write-through)
+      - Wasted resources if most of the data is never read (Main disadvantages)
+- Difference b/w DAX and Elasticache: DAX was specifically developed for in-memory DynamoDB, only supports write through caching stragey (no lazy-laoding). Elasticache is generally used for in-memory for RDS
+- Exam Tips:
+  - In-memory cache sits b/w your application and db
+  - 2 different caching strategies: Lazy loading and Write Through
+  - Lazy loading
+    - only caches the data when it is requested
+    - Elasticache Node failures not fatal, just lots of cache misses
+    - Cache miss pentaly: Initial request, Query db, writing to cache
+    - Avoid stale data by implementing a TTL
+  - Write through
+    - strategy writes data into the cache whenever there is a change to the db
+    - Data is never stale
+    - Write penalty: Each writes invovles a write to the cache
+    - Elasticache node failure means that data is missing untill added or updated in the db
+    - Wasted resources if most of the data is never used
