@@ -73,3 +73,11 @@
 - \$ aws kms enable-key-rotation --key-id <YOURKEYIDHERE> (this will rotate the key)
 
 ---
+
+# KMS key disable and deletion
+
+- Service > KMS
+- (Select the key) > Key Action > Disable
+- (If you want to delete it)
+- (Select the key) > Key Action > Schedule key deletion
+- (It will take 7 days to delete the key)

@@ -11,6 +11,9 @@
       - key state
       - key material (either customer provided or AWS provided)
     - CMK Can Never be exported
+  - Key Material Options:
+    - Use KMS generated Key material
+    - Your own key material
 
 ---
 
@@ -20,3 +23,15 @@
 - aws kms decrypt
 - aws kms re-encrypt
 - aws kms enable-key-rotation
+
+---
+
+# KMS Envelope Encryption
+
+- Encryption: [./envelope-encry.png]
+- Decryption: [./decrypt.png]
+- The Customer Key
+  - Customer Master Key used to decrypt the data key (envelop key)
+  - Envelope Key is used to decrypt the data
+
+---
