@@ -11,3 +11,12 @@
       - key state
       - key material (either customer provided or AWS provided)
     - CMK Can Never be exported
+
+---
+
+# KMS API Calls Exam Tips
+
+- aws kms encrypt
+- aws kms decrypt
+- aws kms re-encrypt
+- aws kms enable-key-rotation
