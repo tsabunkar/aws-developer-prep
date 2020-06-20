@@ -72,3 +72,27 @@
 - Location of configuration files
   - The .ebextensions folder must be included in the top-level directory of your application source code bundle
   - This means that the configuration files can be placed under source control along with the rest of your application code
+
+---
+
+# RDS & Elastic Beanstalk
+
+- Elastic Beanstalk supports two ways of integrating an RDS db with your beanstalk environment.
+- You can launch the RDS instance from within the Elastic Beanstalk console, which means the RDS instance is created within your elastic beanstalk environment - a good option for dev and test deployments
+- However this may not be ideal for production environments bcoz- it means the lifecycle of your db is tied to the lifecycle of your application environment. So if you terminate the environment, the db instance will be terminated too.
+- For production environments , the preferred option is to decouple the RDS instance from your EBS environment i.e- launch it outside of Elastic Beanstalk, directly from the RDS section of the console.
+- This option gives you a lot more flexibility, allows you to connect multiple environemts to the same db, provides a wider choice of db types, and allows you to tear down your application environment without affecting the db instance
+- Access to RDS from EBS
+  - To allow the EC2 Instances in your Elastic Beanstalk environment to connect to an outside db, there are 2 additional configuration step required:
+    - An additional Security Group must be added to your environments auto scaling group.
+    - You'll need to provide connection string configuration information to your application servers (endpoint, password using Elastic Beanstalk environment properties)
+- Exam Tip:
+  - 2 different options for launching your RDS instance:
+  - Launch within EBS
+    - When you terminate the EBS environment, the db will also be terminated
+    - Quick and easy to add your db and get started
+    - Sutiable for Dev and Test environemts only
+  - Launch outside of EBS
+    - Additional configuration steps required - Security Group and Connection information
+    - Suitable for production environemts, more flexibility
+    - Allows connection from multiple environemts, you can tear down the application stack without impacting the db
