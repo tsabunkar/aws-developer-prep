@@ -20,3 +20,46 @@
   - provisions the underlying resources for you
   - Can fully manage the EC2 instances for you or you can take full administrative control
   - updates, monitoring, metrics and health checks all included
+
+---
+
+# EBS Deployment policies
+
+- Elastic Beanstalk supports several options for processing deployments:
+
+  - All at once
+  - Rolling
+  - Rolling with additional batch
+  - Immutable
+
+- All at once Deployment Updates:
+
+  - Deploys the new version to all instances simultaneously
+  - All of your instances are out of service while the deployment takes place
+  - You will experience an outage while the deployment is taking place- not ideal for mission-critical production systems
+  - If the update fails, you need to roll back the changes by re-deploying the original version to all your instances
+
+- Rolling Deployment Policy:
+
+  - Deploys the new version in batches
+  - Each batch of instances is taken out of service while the deployment takes out of service while the deployment takes place
+  - Your environment capacity will be reduced by the number of instances in a batch while the deployment takes place
+  - Not ideal for performance sensitive systems
+  - If the update fails, you need to perform an additional rolling update to roll back the changes
+
+- Rolling with additional batch Policy:
+
+  - Launches an additional batch of instances
+  - Deploys the new version in batches
+  - Maintains full capcity during the deployment process
+  - If the udpate fails, you need to perform an addtional rolling update to rollback the changes
+
+- Immutable Policy:
+
+  - Deploys the new version to a fresh group of instances in their own new autoscaling group
+  - When the new instances pass their health checks, they are moved to your exisiting auto scaling group; and finally the old instances are terminated
+  - Maintains full capacity during the deployment process
+  - The impact of a failed update is far less, and the rollback process requires only terminating the new auto scaling group
+  - Preffered option for mission critical production systems
+
+---
