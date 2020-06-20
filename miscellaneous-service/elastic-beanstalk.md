@@ -63,3 +63,12 @@
   - Preffered option for mission critical production systems
 
 ---
+
+# Configuring Elastic Beanstalk
+
+- You can custmoize your elastic beanstalk environment using elastic beanstalk configuration files (ex- you can define packages to install, create linux users and groups, run shell commands, specify services to enable or configure your load balancer, etc)
+- These are files written in YAML or JSON format.
+- They can have a filename of your choice but must have .config extension and be saved inside a folder called .ebextensions
+- Location of configuration files
+  - The .ebextensions folder must be included in the top-level directory of your application source code bundle
+  - This means that the configuration files can be placed under source control along with the rest of your application code

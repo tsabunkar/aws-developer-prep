@@ -15,4 +15,28 @@
 
 ---
 
-# Updating Elastic Beanstalk
+# Updating Elastic Beanstalk (Uploading Version of Application)
+
+- Service > Elastic Beanstalk > Applications (tab)
+- (Select require enviro) Actions > View Application versions
+- Upload Btn
+  - Version label : hellocloudguru-source-2
+  - Decription : Version-2 of application
+  - (Upload new version of the application - modifiy some file)
+  - Upload
+- Applications > (click) helloCloudGuru > Hellocloudguru-env
+- Configuration (tab)
+- Rolling updates and deployments > Edit
+  - Deployment policy : At all once (2 options)
+- (To deploy new application version)
+  - Applications > (click) helloCloudGuru
+  - Application version (tab)
+  - (select) hellocloudguru-source-2
+  - Actions > Deploy
+  - Deploy
+- To delete above application
+  - Applications > (click) helloCloudGuru
+  - Actions > Delete application
+  - Delete
+
+---
