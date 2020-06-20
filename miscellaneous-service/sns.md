@@ -32,3 +32,38 @@
   - Variety of message formats supported: SMS text message, email, Amazon Simple Queue Service (SQS) queues, any HTTP endpoint.
   - Pub-Sub model whereby users subscribe to topics
   - It is a push mechanism, rather than a pull (poll) mechanism
+
+---
+
+# Amazon SES
+
+- Amazon SES ( Simple Email Service ) is a scalable and highly available email service designed to help marketing teams and application developers send marketing, notification, and transactional emails to their customers using a pay as you go model.
+- Can also be used to receive emails: incoming mails can be delivered automatically to an S3 bucket.
+- Incoming mails can be used to trigger lambda functions and SNS notifications.
+- Use Cases of SES:
+  - Automated emails
+  - Purchase Confirmations, shipping notifications, order status updates
+  - ex: A mobile phone company that needs to send automated confirmation email every time a customer purchases pre-paid mobile phone.
+  - Marketing communications, advertisements, newsletters, special offer, etc
+  - ex: an online retail business that needs to let customers know about sales promotions and discounts
+- SNS v/s SES
+  - SES :
+    - Email messaging service
+    - Can trigger lambda functions or SNS notification
+    - Can be used for both incoming and outgoing email
+    - An email address is all that is required to start sending messages to a user
+    - Asynchronous
+  - SNS :
+    - Pub/sub messaging service, formats include SMS, HTTP, SQS, email
+    - Can be used to trigger lambda function
+    - Can fan out messages to large number of recipients (replicate and push messages to multiple endpoints and formats)
+    - Consumers must subscribe to a topic to receive the notifications
+    - Syschronous
+- Exam Tips:
+  - SES is for emails only
+  - It can be used for incoming and outgoing email
+  - It is not subscription based, you only need to know the email address
+  - SNS support multiple formats (SMS, SQS, HTTP, email)
+  - Push notifications only
+  - Pub/sub model: consumers must subscribe to a topic
+  - You can fan-out messages to large number of recipients (ex- multiple clients each with their own SQS queue)
