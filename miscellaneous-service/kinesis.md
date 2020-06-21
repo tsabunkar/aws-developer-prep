@@ -1,0 +1,27 @@
+# kinesis
+
+- What is Streaming data
+  - Streaming data is data that is generated continuously by thousands of data sources, which typically send in the data records simultaneously, and in small sizes (order of kilobytes)
+  - Purchases from online store
+  - Stock Price
+  - Game data
+  - Social network data
+  - Geospatial data
+  - iOT sensor data
+- What is Kinesis
+  - Amazon kinesis is a platform on AWS to send your streaming data too. Kinesis makes it easy to load and analyze streaming data, and also providing the ability for you to build your own custom applications for you business needs
+- 3 Core Kinesis Services
+  - Kinesis Streams
+  - Kinesis Firehose
+  - Kinesis Analytics
+- Kinesis Streams
+  - [./assets/kinesis-streams.png]
+  - Kinesis Streams consist of shards
+    - 5 transactions per second for reads, up to a maximum total data read rate 2MB per second and upto 1000 records per second for writes, upto a maximum total data write of 1MB per second (including partition keys).
+    - The data capcity of your stream is a function of the number of shards that you specify for the stream. The total capacity of the stream is the sum of the capacities of it shards.
+- Kinesis Firehose
+  - [./assets/kinesis-firehose-*.png]
+- Kinesis Analytics
+  - [./assets/kinesis-analytics.png]
+- Exam Tips:
+  - Know the difference b/w kinesis streams and kinesis firehose. You will be given scenario based question and you must choose the most relevant Service
