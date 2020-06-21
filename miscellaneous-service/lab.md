@@ -15,7 +15,7 @@
 
 ---
 
-# Updating Elastic Beanstalk (Uploading Version of Application)
+## Updating Elastic Beanstalk (Uploading Version of Application)
 
 - Service > Elastic Beanstalk > Applications (tab)
 - (Select require enviro) Actions > View Application versions
@@ -40,3 +40,26 @@
   - Delete
 
 ---
+
+# Kinesis
+
+- Service > Management & Governance > CloudFormation
+- Create Stack
+  - Prepare template: Template is ready
+  - Specify template: Amazon S3 URL -> http://s3.amazonaws.com/kinesis-demo-bucket/amazon-kinesis-data-visualization-sample/kinesis-data-vis-sample-app.template
+  - Next
+  - Stack name > MyKinesisStack > Next
+  - (Default)
+  - Create Stack
+  - (10-15 mins to create the stack)
+- (select) MyKinesisStack
+  - Outputs
+  - URL: http://ec2-35-174-77-165.compute-1.amazonaws.com
+  - (Simulate of sample application)
+- Services > EC2 > (See a instance running)
+- Services > Analytics > Kinesis
+  - Data streams (tab) > Configuration (tab) - (see details of shards)
+- Services > Database > DynamoDB > Tables - (see tables are created)
+- TO Delete this cloudformation:
+  - (select) MyKinesisStack
+  - Delete
