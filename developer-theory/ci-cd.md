@@ -106,3 +106,27 @@
   - AppSpec is a Configuration File- Defines the parameter to be used by CodeDeply ex- OS, files, hooks
   - appspec.yml - Should be saved to the root of your revision
   - Hooks - Lifecycle events hooks have a very specific run order.
+
+---
+
+# CodeDeploy Lifecycle Event Hooks
+
+- Lifecycle event hooks are run in a specific order known as the Run order
+- Think CodeDeployment lifecycle event hooks in 3 phases (In-Place Deployment)
+  - Phase-1 : De-register instances from a Load Balancer (BeforeBlockTraffic, BlockTraffic, AfterBlockTraffic)
+  - Phase-2 : The real nuts & bolts of the application deployment (ApplicationStop, DownloadBundle, BeforeInstall, Install, AfterInstall, ApplicationStart, ValidateService)
+  - Phase-3 : Re-register instances with the Load balancer (BeforeAllowTraffic, AllowTraffic, AfterAllowTraffic)
+- Lifecycle Hooks:
+  - BeforeBlockTraffic: Before - Tasks/scripts you want to run on instances before they are de-registered from a load balancer
+  - BlockTraffic: block - De-register instances from a Load Balancer
+  - AfterBlockTraffic: after - Tasks you want to run on instances after they are de-registered from a Load Balancer
+  - ApplicationStop: Gracefully stops the application
+  - DownloadBundle: CodeDeploy agent copies the application revision files to a temporary location
+  - BeforeInstall: Pre-installation scripts ex- backing up the current version, decrypting files
+  - Install: Copy application revision files to final location
+  - AfterInstall: Post-install scripts ex- configuration, file permissions
+  - ApplicationStart: Start any services that were stopped during ApplicationStop
+  - ValidateService: Run tests to validate the service
+  - BeforeAllowTraffic: before - Tasks you want to run on instances before they are registered with the load balancer
+  - AllowTraffic: Allow - Register instances with a load balancer
+  - AfterAllowTraffic: After - Tasks you want to run on instances after they are registered with a Load Balancer
