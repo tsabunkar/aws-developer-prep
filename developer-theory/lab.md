@@ -23,4 +23,14 @@
 - \$ git push -u origin master
 - (To create branch using aws web app)
   - Branches (tab)
-  -
+  - Create branch
+  - Branch name : dev
+  - Branch from : master
+  - Create branch
+- Create pull request
+  - (Define Destination Source)
+  - Compare
+  - Create pull request
+  - Merge
+  - Fast forward merge
+  - Merge pull request
