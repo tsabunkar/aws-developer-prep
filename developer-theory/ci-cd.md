@@ -86,3 +86,23 @@
     - Green instances can be created ahead of time
     - Easy to switch between old and new
     - You play for 2 environments untill you terminate the olde servers
+- NOTE : Safest Option for code deployment in production environment is - Blue/Green approach
+- Configure CodeDeploy using the AppSpec File
+  - Configuration File: Defines the parameters to be used during a codeDeploy deployment
+  - EC2: For EC2 and on-premises systems, YAML only
+  - Lambda: YAML and JSON supported. File Structure depends on weather you are deploying to lambda or EC2
+  - AppSpec file Structure:
+    - Version: Reserved for future use- Current allowed version value is 0.0
+    - OS: Operating System version- linux, windows
+    - file: Configuring files, packages- The location of any applications files that need to be copied and where they should be copied to
+    - hooks: Lifecycle event hooks- Scripts which need to run at set points in the deployment lifecycle. Hooks have a very specific run order
+- Scripts You might run during the deployment process
+  - Unzip Files: Unzip application files prior to deployment
+  - Run Tests: Run functional tests on a newly deployed application
+  - Deal with Load Balancing: De-register and re-register instances with a load balancer
+  - [.assets/AppSec.png]
+- NOTE: appspec.yml file must be placed at the root of the directory of your revision, otherwise the deployment will fail
+- Exam Tips:
+  - AppSpec is a Configuration File- Defines the parameter to be used by CodeDeply ex- OS, files, hooks
+  - appspec.yml - Should be saved to the root of your revision
+  - Hooks - Lifecycle events hooks have a very specific run order.
