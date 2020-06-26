@@ -130,3 +130,21 @@
   - BeforeAllowTraffic: before - Tasks you want to run on instances before they are registered with the load balancer
   - AllowTraffic: Allow - Register instances with a load balancer
   - AfterAllowTraffic: After - Tasks you want to run on instances after they are registered with a Load Balancer
+
+---
+
+# CodePipeline
+
+- A fully Managed CI/CD Service
+  - Orchestrates Build, Test & Deployment: The pipeline is triggered everytime there is a change to your code. like a conductor in an orchestra
+  - Automated Release Process: Fast, consistent, fewer mistakes. Enables quick release of new features and bug fixes
+  - CodePipeline integrates with: CodeCommit, CodeBuild, CodeDeploy, Github, Jenkins, Elastic Beanstalk, CloudFormation, Lambda, Elastic Container Service
+- Example CodePipeline Workflow
+  - CodePipeline: Workflow is defined- The workflow begins when there is a change detected in your source code.
+  - CodeCommit: New Code Appears- New source appears in the codeCommit Repository
+  - CodeBuild: Code is Build & Tested- CodeBuild immediately compiles source code, runs tests, and produces packages
+  - CodeDeploy: Application Deployed- The newly build application is deployed into a staging or production environment
+- ExamTips:
+  - Continuous Integration/Continuous Delivery Service: Orchestrates you end-to-end software release process based on a workflow you define
+  - Automated: Automatically triggers your pipeline as soon as a change is detected in your source code repository
+  - Integrates with AWS & Third-Party Tools: CodeCommut, CodeBuild, CodeDeploy, Github, Jenkins, Elastic Beanstalk, Cloudformation, Lambda, Elastic Container Service
