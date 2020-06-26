@@ -40,3 +40,49 @@
   - Version Control: Tracks and manages code changes Maintains version history
 
 ---
+
+# CodeDeploy
+
+- Automated Deployment Service
+- Works with EC2 instances, on-premises & Lambda
+- Quick release new feature
+- Avoid downtime during deployments
+- Avoid the risks associated with manual processes
+- Code deployments apporaches
+  - In-Place:
+    - The applications is stopped on each instance and the new release is installed. Also known as a rolling update
+    - Steps:
+      - The applications is stopped on the first instance
+      - The instance will be out of service during the deployment so capcity is reduced.
+      - You should configure your Elastic Load Balancer to stop sending the requests to the instance for which deployment is in go on( which is down )
+      - CodeDeploy installs the new version, known as a Revision
+      - The instance comes back into service
+      - CodeDeploy continues to deploy to the next instance
+    - How to Rollback in deployment process ?
+      - If you change your mind, there's no quick fix
+      - With an in-place deployment you'll need to re-deploy the previous version which can be time consuming
+  - Blue/Green:
+    - New instances are provisioned and the new release is intalled on the new instances. Blue represents the active deployment, green is the new release
+    - Steps:
+      - Blue represents the current version of our application
+      - CodeDeploy provisions new instances
+      - The new Revision is deployed to the Green environment
+      - The Green instances are registered with the Elastic Load balancer
+      - Traffic is routed away from the old environment
+      - The Blue environment is eventually terminated
+    - How to Rollback in deployment process in Blue/Green?
+      - With Blue/Green, its easy
+      - Just set the load balancer to direct the traffic back the original environment
+      - Thus easy to swtich between the old and new releases
+      - Only works if you didn't already termiate your old environment
+- Difference b/w in-place and blue/green:
+  - In-place:
+    - Capacity is reduced during the deployment
+    - Lambda is not supported
+    - Rolling back involves a re-deploy
+    - Great when deploying the first time
+  - Blue/Green
+    - No capcity reduction
+    - Green instances can be created ahead of time
+    - Easy to switch between old and new
+    - You play for 2 environments untill you terminate the olde servers
