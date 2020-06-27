@@ -8,12 +8,13 @@
 - ( Copied url -> https://git-codecommit.us-east-1.amazonaws.com/v1/repos/test-aws-developer-prep )
 - (Open url local CLI)
 - \$ cd /tejas/workspace
-- \$ git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/test-aws-developer-prep
+- \$ sudo git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/test-aws-developer-prep
 - [
   ERROR: 403 -> The requested URL returned error: 403
   git config --global credential.helper '!aws codecommit credential-helper $@'
   git config --global credential.UseHttpPath true
   ]
+- (Make sure IAM User for which your trying to login with username and credentails -> has AWSCodeDeployFullAccess and his credentials are created under-> HTTPS Git credentials for AWS CodeCommit)
 - \$ cd test-aws-developer-prep
 - \$ echo "Hello-world" > Readme.md
 - \$ cat Readme.md
@@ -212,3 +213,99 @@
   - Visit - http://54.237.109.41/ (See your changes)
 
 ---
+
+# Docker and CodeBuild
+
+- Services > Developer Tools > CodeCommit
+- Create repositry
+  - Repository name: mydocker
+  - create
+- (Clone HTTPs URL) to your local machine as- devUser1
+  - Make sure for IAM devUser1 you have created ==> HTTPS Git credentials for AWS CodeCommit
+  - Also given secuirty policy -> AWSCodeDeployFullAccess
+  - Check: https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-gc.html?icmpid=docs_acc_console_connect_np
+- (Inside this repo add files --> [./assets/docker])
+  - \$ sudo cp -f aws-developer-prep/developer-theory/assets/docker/\* mydocker/
+- \$ cd mydocker/
+- \$ sudo git add .
+- \$ sudo git status
+- \$ sudo git commit -m "docker files"
+- \$ git config user.email "tsabunkar@gmail.com" (If error - fatal: unable to auto-detect email address)
+- \$ sudo git push
+- (Creating ECS)
+  - Services > Containers > Elastic Container Service
+  - Clusters (tab) > Create Cluster
+  - Select cluster template: (select) EC2 Linux + Networking
+  - Configure cluster
+    - Cluster name: firstCluster
+    - Provisioning Model: On-Demand Instance
+    - EC2 instance type: t2.micro
+    - Create
+  - View Cluster
+  - Clusters > firstCluster
+- (Repo for docker images)
+  - Amazon ECR > Repositories Repositories > Create repository
+  - Repository name: docker-repo
+  - create repository
+  - (select) docker-repo
+  - View push commands
+  - (Go to Local Terminal)
+  - \$ aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 494039644227.dkr.ecr.us-east-1.amazonaws.com
+  - (ERROR: AccessDeniedException) when calling the GetAuthorizationToken ==>
+    - IAM > Users
+    - (select) devUser1
+    - Add permision
+    - Attach existing policies directly
+    - AWS Managed Policy AmazonEC2ContainerRegistryPowerUser
+    - Add permissions
+      ) [ NOTE: Also make sure you are able docker commands in ur local CLI without sudo permission check - $ sudo chmod 666 /var/run/docker.sock ==> REF: https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue ]
+  - \$ cd /home/tejas/tejas/workspace/vsc/aws-developer-prep/developer-theory/assets/docker
+  - \$ docker image ls
+  - \$ docker build -t docker-repo .
+  - \$ docker image ls (Check if this image is created ==> docker-repo)
+  - \$ docker tag docker-repo:latest 494039644227.dkr.ecr.us-east-1.amazonaws.com/docker-repo:latest
+  - \$ docker push 494039644227.dkr.ecr.us-east-1.amazonaws.com/docker-repo:latest
+  - (Check in the Amazon ECR Repo this image is pushed here )
+- (Launch Docker Image)
+  - Amazon ECS > Clusters > Task Definitions (tab)
+  - Create new Task Definition
+  - Select launch type compatibility: EC2
+  - Configure task and container definitions
+    - Task Definition Name: dockertaskdef
+    - Task memory (MiB) : 512
+    - Task CPU (unit) : 512
+    - Add container
+      - Container name: myFirstContainer
+      - Image: (image which we pused in ECR Repo, To find the Repo URL ->
+        - Amazon ECR > Repositories
+        - docker-repo > (Copy URI)
+        - 494039644227.dkr.ecr.us-east-1.amazonaws.com/docker-repo
+        - NOTE: (add latest suffix) --> 494039644227.dkr.ecr.us-east-1.amazonaws.com/docker-repo:latest
+          )
+        - Port mappings: Host port: 80, Container port: 80
+        - Add
+      - Create
+- Task Definitions > dockertaskdef > dockertaskdef:1
+- Actions > (select) Create Service
+- Configure service:
+  - Launch type: EC2
+  - Service name: myservice
+  - Number of tasks: 1
+- Next > Create Service
+- Clusters (tab) > View List
+- (select) firstCluster
+- (select) myservice > Events (tab- service is ready state)
+- Clusters > (select) firstCluster > ECS instances (tab)
+- (select) EC2 instance [Re-directed to EC2 page]
+- (copy) IPv4 Public IP - 3.235.131.171
+- [open in browser - 3.235.131.171] (Should see the echo as mentioned in Dockerfile)
+
+---
+
+devUser-1 ==> AWS Configure credentials
+AKIAXGBYOXBBQYUNGWOC
+lbmpbNNQp+vKMZLYWbK8ieN5L7GQKJuhxKDfPC0q
+
+devUser-1 ==> HTTPS Git credentials for AWS CodeCommit
+devUser1-at-494039644227
+LxHVTQNgGLIDYSaYv/prV01aSMtkWVazigCx0XIPr+E=

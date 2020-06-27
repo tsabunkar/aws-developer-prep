@@ -190,3 +190,14 @@
   - Fargate (Serverless) You don't need to worry about the underlying EC2 instances
   - EC2: (More Control) If you want to controll installation, Configuration and management of your compute environment
   - ECR (Container Registry)- This is where you can store your containers images. Docker or Windows Container
+
+---
+
+# Docker and CodeBuild Lab
+
+- Docker is an Open Source technology which allows you to create applications based on either Linux or Windows containers
+- A container is a lightweight standalone executable s/w package which includes everything the software needs to run-code, runtime environment, libraries, environment settings etc
+- AWS provides Elastic Container Service as fully managed clustered platform which allows you to run your Docker images in the cloud
+- AWS CodeBuild is a fully managed build service which runs a set of commands that you define, ex- compiles code runs tests and produces artifacts that are ready to deploy
+
+---
