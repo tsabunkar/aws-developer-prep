@@ -301,11 +301,3 @@
 - [open in browser - 3.235.131.171] (Should see the echo as mentioned in Dockerfile)
 
 ---
-
-devUser-1 ==> AWS Configure credentials
-AKIAXGBYOXBBQYUNGWOC
-lbmpbNNQp+vKMZLYWbK8ieN5L7GQKJuhxKDfPC0q
-
-devUser-1 ==> HTTPS Git credentials for AWS CodeCommit
-devUser1-at-494039644227
-LxHVTQNgGLIDYSaYv/prV01aSMtkWVazigCx0XIPr+E=
