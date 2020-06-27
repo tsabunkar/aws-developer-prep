@@ -34,3 +34,74 @@
   - Merge
   - Fast forward merge
   - Merge pull request
+
+---
+
+# CodeDeploy
+
+- (Creating Required IAM Roles)
+  - Services > Security, Identity, & Compliance > IAM
+  - Roles (tab) > Create Role
+  - Select type of trusted entity: AWS service
+  - Choose a use case: (select) EC2 > Next
+  - Filter policies: AmazonS3FullAccess (select)
+  - Role name: myS3roleForCodeDeploy > Create role
+  - Roles (tab) > Create Role
+  - Select type of trusted entity: AWS service
+  - Or select a service to view its use cases: (select) CodeDeploy
+  - Select your use case: (select) CodeDeploy
+  - Attached permissions policies- AWSCodeDeployRole
+  - Role name: cdServiceRole > Create role
+- (Creating EC2 Instance)
+  - Configure Instance Details
+    - IAM role: (select) myS3roleForCodeDeploy
+    - Next
+  - Add Tags
+    - Key: AppName, Value: myWebApp
+  - Configure Security Group
+    - Select an existing security group: myWebDMZ
+  - Lanuch Instance
+- (Login locally using CLI to AWS EC2 Instance created)
+  - (run commands - [./assets/commands-code-deploy.sh])
+- (Locally - Configure AWS CLI it will Act as developers machine and we can deploy the code )
+  - EC2 > IAM
+  - Users (tab) > Add user
+  - User name: devUser1
+  - Access type: Programmatic access
+  - Set permissions: (Select) Attach existing policies directly
+  - policy : (select) AWSCodeDeployFullAccess and AmazonS3FullAccess
+  - Create User
+  - Copy the -> Access Key ID and Secret access key (Useful to login from local CLI as developer)
+  - (Back to your terminal) > cd ~
+  - \$ aws configure
+  - (Paste the Access Key ID and Secret access key )
+  - Service > S3
+  - create bucket
+  - Bucket name: cd-bucket-tsabunkar > create bucket
+  - (Back to terminal) -> (Create your application.zip and load it into CodeDeploy)
+  - \$ aws deploy create-application --application-name mywebapp
+  - \$ cd /home/tejas/tejas/workspace/vsc/aws-developer-prep/developer-theory/assets/webapp
+  - \$ aws deploy push --application-name mywebapp --s3-location s3://<MY_BUCKET_NAME>/<src_path_for_webapp.zip> --ignore-hidden-files
+  - \$ aws deploy push --application-name mywebapp --s3-location s3://cd-bucket-tsabunkar/webapp.zip --ignore-hidden-files
+  - (Thus a zip file is pushed/uploaded to S3 bucket) ==> (To Verify -> Amazon S3 > cd-bucket-tsabunkar)
+- Deployment
+  - Services > Developer Tools > CodeDeploy
+  - Applications (tab) -> (should see the application was created by CLI here -> mywebapp)
+  - (select) mywebapp
+  - Deployment Groups (tab)
+  - Create deployment group
+  - Enter a deployment group name: mydg
+  - Service role: (select) arn:aws:iam::494039644227:role/cdServiceRole (Servicle Role created previously in IAM)
+  - Deployment type: In-place
+  - Environment configuration: Amazon EC2 instances
+    - Key: AppName, Value: myWebApp (Tag created previously)
+  - Load balancer: (de-select) Enable load balancing
+  - Create deployment group
+  - Applications > mywebapp > mydg > (Click) Create deployment
+  - Deployment settings
+    - Revision location: s3://cd-bucket-tsabunkar/webapp.zip?eTag=8d97a49e9e76d1322f8a1704e70cb1c1
+    - Create Deployment
+- To Verify CD had been successfully and our pages are hosted
+  - Services > EC2
+  - Running Instances > (select) Instances
+  - Copy+paste the IPv4 Public IP ==> 18.234.249.10 (in browser) [Thus EC2 instance is serving this website]
