@@ -148,3 +148,45 @@
   - Continuous Integration/Continuous Delivery Service: Orchestrates you end-to-end software release process based on a workflow you define
   - Automated: Automatically triggers your pipeline as soon as a change is detected in your source code repository
   - Integrates with AWS & Third-Party Tools: CodeCommut, CodeBuild, CodeDeploy, Github, Jenkins, Elastic Beanstalk, Cloudformation, Lambda, Elastic Container Service
+
+---
+
+# Elastic Container Service
+
+- What are Containers: Similar to a virtual machine, more like a virtual operating environment.
+- Standardized: A standardized unit with everything the software needs to run ex- libraries, system tools, code and runtime
+- Microservices: Applications are created using independent stateless components or microservice running in containers
+- Docker or Windows Containers:
+  - Use Docker to create a linux containers and windows containers for windows workload
+  - [.assets/running-containerized-microservices-on-aws.pdf]
+  - REF: https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf
+- Docker Container Architecture: [.assets/docker-container.png]
+- Advantages of Containers & Microservices Architecture:
+  - Highly Scalable: If the application becomes over loaded, scale only the services you need.
+  - Fault Tolerant: A single error in one of your containers shouldn't bring the entier app down.
+  - Easy to Maintain: Easier to maintain, update and change than large monolithic applications
+- What About ECS ?
+  - A container orchestration service which supports Docker and Windows Containers
+  - Quickly deploy and scale containerized workloads without having to install, configure, manage and scale your own orchestration platform
+  - Similar to Kubernetes, but with deep integration with AWS services ex- IAM, VPC, Route53
+  - Ewe can run containers as:
+    - Clusters of Virtual Machines: ECS will run your containers on cluster of Virtual Machines
+    - Fargate for Serverless: Use Fargate for serverless containers and you don't need to worry about the underlying EC2 instances
+    - EC2 For More Control: If you want to controll the installation, configuration and management of your compute environment
+- Elastic Container Registry:
+  - If we have docker image, and want to deploy docker containers to ECS- first we should create Elastic Container Registry (ECR)
+  - ECR - is a place or registry where you store your container images
+  - [.assets/ECR.png]
+- Other Services with ECS:
+  - Amazon Sagemaker: Quickly deploy and scale machine learning models for training and inference jobs
+  - Amazon Lex: Uses deep learning to build conversational interfaces ex- chatbots
+  - amazon.com - Amazon own recommendation engine is running on ECS
+- EXAM TIPS:
+  - Containers:
+    - Virtual operating environment with everything the software need to run.
+    - Includes libraries, system tools, code and runtime
+    - Allows applications to be built using independent stateless components or microservices running in multiple containers
+  - ECS: (Container Orchestratation) ECS will run your containers on clusters of virtual machines
+  - Fargate (Serverless) You don't need to worry about the underlying EC2 instances
+  - EC2: (More Control) If you want to controll installation, Configuration and management of your compute environment
+  - ECR (Container Registry)- This is where you can store your containers images. Docker or Windows Container
