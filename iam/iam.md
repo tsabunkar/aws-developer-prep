@@ -112,3 +112,20 @@
     - Customer Managed Policy: Managed by you
     - Inline Policy: Managed by you and embeeded in a single user, gorup or role
   - In most cases, AWS recommends using Managed Policies over Inline Policies
+
+---
+
+# STS AssumeRoleWithWebIdentity
+
+- assume-role-with-web-identity is an API provided by STS (Security Token Service)
+- Returns temporary security credentials for users authenticated by a mobile or web application or using a Web ID provider like - Amazon, FB, Google, etc
+- For Mobile Applications, Cognito is recommended
+- Regular web applications can use the STS assume-role-with-web-identity API
+- [.assets/AssumeRoleWithWebIdentity-workflow.png]
+- [.assets/response.png]
+- Exam Tips:
+  - Part of the Security Token Service
+  - Allows users who have authenticated with a Web Identity provider to access AWS resources
+  - Once the user has authenticated, the application makes the assume-role-with-web-identity API Call
+  - If successful, STS will return temporary credentials enabling access to AWS resources
+  - AssumeRoleUser ARN and AssumedRoleID - are used to programatically reference the temporary credentials - not an IAM role or user
