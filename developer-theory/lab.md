@@ -301,3 +301,39 @@
 - [open in browser - 3.235.131.171] (Should see the echo as mentioned in Dockerfile)
 
 ---
+
+## To Make Above docker build steps - Automated
+
+- Configuration file for codeBuild ==> [.assets/docker-2]
+- \$ cd /home/tejas/tejas/workspace/vsc/aws-developer-prep/developer-theory/assets/docker-2
+- \$ sudo cp -f /home/tejas/tejas/workspace/vsc/aws-developer-prep/developer-theory/assets/docker-2/\* /home/tejas/tejas/workspace/vsc/mydocker/
+- \$ cd mydocker
+- \$ git status
+- \$ sudo git add .
+- \$ sudo git commit -m "Automatated"
+- \$ sudo git push
+- \$ pass edit aws/aws-code-commit/devUser1 (If you want username and pass)
+- Developer Tools > CodeCommit > Repositories > (select) mydocker [Check code is pushed]
+- Services > CodeBuild
+- Create build project
+- Project configuration
+  - Project name: tsabunkar-build
+  - Repository: mydocker
+  - Branch: master
+  - Operating system: Ubuntu
+  - Runtime(s): Standard
+  - Image: aws/codebuild/standard:3.0
+  - Image version: Always use the latest image for this runtime version
+  - Privileged: (Check) Enable this flag if you want to build Docker images or want your builds to get elevated privileges
+  - Build specifications: Use a buildspec file
+  - Create build project
+- Start build > Start build
+- (IF ERROR : Phase complete: PRE_BUILD State: FAILED
+  - Services > IAM
+  - Roles
+  - (select) codebuild-tsabunkar-build-service-role
+  - Attach policies
+  - AmazonEC2ContainerRegistryPowerUser
+    )
+- Retry build (If Successful)
+- Amazon ECR > Repositories > docker-repo (Should see 2 repo's)
