@@ -92,3 +92,47 @@
 - Next Reviews
 - Role name : S3Access-EC2
 - Create Role
+
+---
+
+# Cognito lab
+
+- Services > Security, Identity, & Compliance > Cognito
+- Manage User Pools
+- Create a user pool
+- Pool name: testpool
+- Review defaults
+- Create pool
+- (pool is created successfully)
+- App clients: (click) Add app client...
+  - Add an app client
+  - App client name: mytestclient
+  - Create app client
+- App Integration > App client settings (tab)
+  - Enabled Identity Providers: (check) Cognito User Pool
+  - Callback URL(s): https://example.com
+  - OAuth 2.0
+    - Allowed OAuth Flows : (check) -> Authorization code grant, Implicit grant
+    - Allowed OAuth Scopes : (check) -> phone, email, openid, aws.cognito.signin.user.admin, profile
+  - Save changes
+- App Integration > Domain Name
+  - Amazon Cognito domain: tsabunkar(domain prefix)
+- UI customization
+  - (add some logo)
+- (click) App Integration
+  - copy the Domain url : ttps://tsabunkar.auth.us-east-1.amazoncognito.com
+  - (add suffix): https://tsabunkar.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=<client_id_value>&redirect_uri=<mentioned_callback_url>
+  - <client_id_value> - App Integration > App client settings > ID 4vhtaa8ucupo3vuk86ibgqlvkj
+  - https://tsabunkar.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=4vhtaa8ucupo3vuk86ibgqlvkj&redirect_uri=https://example.com
+- Genral Settings > Users and Groups
+  - (click) refresh icon
+  - Groups (tab)
+  - Create group
+  - Name (Required): testgroup
+  - Description: Test
+  - IAM role: db-admin
+  - (select) testgroup
+    - Add users
+    - (select) tsabunkar [User who sign-up]
+  - Add to group: (select) testgroup
+- Federation > Identity providers (you can see all 3rd party identity providers)

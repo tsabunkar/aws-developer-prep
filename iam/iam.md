@@ -79,3 +79,5 @@
   - Cognito uses User pools to manage user sign-up and sign-in directly or via web identity provider
   - Cognito acts as an identity broker handling all interaction with web identity providers
   - Cognito uses Push Synchronization to send a silent push notification for user data updates to multiple device types associated with a User ID
+
+---
