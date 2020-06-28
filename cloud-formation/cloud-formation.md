@@ -27,3 +27,14 @@
     - Resources - (Mandatory) the AWS resources to create
     - Mappings - create custom mappings like Region: AMI
     - Transforms - reference code located in S3 ex- Lambda code or reusable snippets of CloudFormation code
+
+---
+
+# SAM (Serverless Application Model)
+
+- Serverless Application Model is an extension to CloudFormation used to define serverless applications.
+- Simplified syntax for defining serverless resources: APIs, Lambda Functions, DynamoDB Tables etc
+- Use the SAM CLI to package your deployment code, upload it to S3 and deploy your serverless application
+- Use the SAM CLI commands to package and deploy
+  - sam package - packages your application and uploads to S3
+  - sam deploy - deploys your serverless app using CloudFormation
