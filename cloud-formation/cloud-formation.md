@@ -38,3 +38,13 @@
 - Use the SAM CLI commands to package and deploy
   - sam package - packages your application and uploads to S3
   - sam deploy - deploys your serverless app using CloudFormation
+
+---
+
+# CloudFormation Nested Stacks
+
+- Nested Stacks allow re-use of CloudFormation code for common use cases
+- ex- Standard configuration for a load balancer, web server, application server, etc
+- Instead of copying out the code each time, create a standard template for each common use case and reference from within your CloudFormation template
+- Really useful for frequently used configurations, ex- for load balancer, web application servers
+- Simply create a cloudformation template, store it in S3 and you can reference it in the resources section of any CloudFormation template using the Stack resource type
