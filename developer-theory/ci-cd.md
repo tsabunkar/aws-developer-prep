@@ -201,3 +201,13 @@
 - AWS CodeBuild is a fully managed build service which runs a set of commands that you define, ex- compiles code runs tests and produces artifacts that are ready to deploy
 
 ---
+
+# Docker and CodeBuild Exam Tops
+
+- Docker commands to build, tag (apply an alias) and push your docker iamge to the ECR repository
+  - docker build -t docker-repo .
+  - docker tag docker-repo:latest 494039644227.dkr.ecr.us-east-1.amazonaws.com/docker-repo:latest
+  - docker push 494039644227.dkr.ecr.us-east-1.amazonaws.com/docker-repo:latest
+- Use buildspec.yml to define the build commands and settings used by CodeBuild to run your build
+- You can override the settings in buildspec.yml by adding your commands in the console when you launch the build
+- If your build fails, check the build logs in the CodeBuild console and you can also view the full CodeBuild log in CloudWatch
