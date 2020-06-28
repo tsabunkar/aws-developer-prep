@@ -48,3 +48,11 @@
   - This can include EC2 CPU Utilization, Elastic Load Balancer Latency or even the charges on your AWS bill.
   - You can set the appropriate thresholds in which to trigger the alarms and also set what actions should be taken if an alarm state is reached
 - CloudWatch can be used on Permise - Not restricted to just AWS resources. Can be on premise too. Just need to download and install the SSM agent and cloudwatch agent
+
+---
+
+# Difference between CloudWatch vs CloudTrail vs Config
+
+- CloudWatch Monitors performance
+- CloudTrail monitor API calls in the AWS platform
+- AWS Config records the state of your AWS environment and can notify you of changes
