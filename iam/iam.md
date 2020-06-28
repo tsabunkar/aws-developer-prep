@@ -32,3 +32,50 @@
 - MFA enabled, when a user signs in to an AWS Management Console, they will be prompted for their user name and password (the first factor—what they know), as well as for an authentication code from their AWS MFA device (the second factor—what they have).
 - Taken together, these multiple factors provide increased security for your AWS account settings and resources.
 - You can enable MFA for your AWS account and for individual IAM users you have created under your account. MFA can be also be used to control access to AWS service APIs.
+
+---
+
+# Web Identity Federation
+
+- Web Identity Federation lets you give your users access to AWS resources after they have successfully authenticated with a web-based identity provider like- Amazon, Facebook or Google
+- Following successful authentication, the user receives an authentication code from the Web ID provider, which they can trade for temporary AWS security credentials.
+- Amazon Cognito:
+  - Amazon Cognito provides Wbe Identity Federation with the following features:
+    - Sign-up and sign-in to your apps
+    - Access for guest users
+    - Acts as an Identity Broker between your application and Web ID providers, so you don't need to write any additional code
+    - Synchronizes user data for multiple devices
+    - Recommended for all mobiles applications AWS services
+- Amazon Cognito Use Cases:
+  - The recommended approach for Web Identity Federation using social media like Facebook
+  - Cognito brokers between the app and FB or Google to provide temporary credentials which map to an IAM role allowing access to the required resources
+  - No need for the application to embed or store AWS credentials locally on the device and it gives users a seamless experience across all mbile devices
+- Exam Tips:
+  - Federation allows users to authenticate with a Web Identity Providers (FB, Google, Amazon)
+  - The user authenticates first with the Web ID Provider and receive an authentication token, which is exchanged for temporary AWS credentials allowing them to assume an IAM role
+  - Cognito is an identity broker which handles interation b/w your application and the WebID provider (you don't need to write your own code to do this)
+  - provides sign-up, sign-in and guest user access
+  - Sync user data for a seamless experience across your devices
+  - Cognito is the AWS recommended approach for Web ID Federation particualry for mobile apps
+
+---
+
+# Cognito User Pools
+
+- User Pools
+  - are user directories used to manage sign-up and sign-in in functionality for mobile and web applications
+  - Users can sign-in directly to the User Pool, or indirectly via an identity provider like - FB, Amazon or Google.
+  - Cognito acts as an Identity Broker b/w the ID provider and AWS
+  - Successful authentication generates a number of JSON web tokens (JWTs)
+  - [./user-pools.png]
+- Identity Pools
+  - enable you to create unique identities for your users and authenticate them with identity providers.
+  - Within an identity, you can obtain temporary, limited-privilege AWS credentials to access other AWS services
+- Cognito uses PUSH SYNCHRONIZATION
+  - Cognito tracks the association b/w user identity and the various different devices they sign-in from
+  - In order to provide a seamless user experience for your application, Cognito uses Push Synchronization to push updates and synchronize user data across multiple devices
+  - Amazon SNS is used to send a silent push notification to all the devices associated with a given user identity whenever data stored in the cloud changes
+- Exam Tips:
+  - Cognito uses User pools to manage user sign-up and sign-in directly or via web identity provider
+  - Cognito acts as an identity broker handling all interaction with web identity providers
+  - Cognito uses Push Synchronization to send a silent push notification for user data updates to multiple device types associated with a User ID
