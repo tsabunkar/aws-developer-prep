@@ -63,3 +63,19 @@
 - TO Delete this cloudformation:
   - (select) MyKinesisStack
   - Delete
+
+---
+
+# Elastic Beanstalk & Docker Containers
+
+- Elastic Beanstalk > Environments
+- Applications (tab)
+- Create a new environment
+- Web server environment
+- Application name: my-docker-app
+- Platform: Docker
+- Application code
+  - Upload your code: Local file ([./docker/docker-singlecontainer-v1.zip])
+- create environment
+- Elastic Beanstalk > Environments > MyDockerApp-env
+- MyDockerApp-env.eba-gkaufme5.us-east-1.elasticbeanstalk.com (click on link)
