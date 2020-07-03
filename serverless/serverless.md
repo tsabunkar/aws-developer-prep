@@ -228,3 +228,47 @@
     - Amazon Elastic Compute Cloud
     - AWS Elastic Beanstalk
   - Lnguages integrates: Java, GO, Nodejs, pythong, Ruby, .net
+
+---
+
+# Lambda Concurrent Executions Limit
+
+- Concurrent Executions
+  - Not necessary to memoruze lots of limits for the exam
+  - Be aware that there is a concurrent execution limit for Lambda
+  - Safety feature to limit the number of concurrent executions across all functions in a given region per account
+  - default is 1000 per region
+  - TooManyRequestsException
+  - HTTP Status Code:429
+  - Request throughput limit exceeded
+  - If you have many Lambda functions running in the same region and you suddenly start seeing new invocation requests being rejected, then you may have hit your limit
+  - Request an increase on this limit by submitting a request to the AWS Support Center
+  - Reserved concurrency guarantees that a set number of executions which will always be avaliable for your critical function, however this also acts as a limit
+
+---
+
+# Lambda Version
+
+- When you create a Lambda funcion, there is only one version: \$LATEST
+- When you upload a new version of the code to lambda, this version will become \$LATEST
+- You can create multiple versions of your function code and use aliases to reference the version you want to use as part of the ARN
+- ex- In a development environment you might want to maintain a few versions of the same function as you develope and test your code
+- An alias is like a pointer to a specific version of the function code
+- [./assets/lambda-version.png]
+- [./assets/lambda-version-2.png]
+
+---
+
+# Lambda and VPCs
+
+- Some use cases require Lambda to access resources which are inside a private VPC
+- ex- read or write to an RDS database, or shutdown an EC2 instance in response to a security alert
+- [./assets/lambda-VPC.png]
+- Enabling Lambda to Access Your VPC Resources
+  - To enable this, you need to allow the function to connect to the private subnet
+  - Lambda needs the following VPC configuration information so that it can connect to the VPC:
+    - Private subnet ID
+    - Security group ID (with required access)
+    - Lambda uses this information to set up ENIs using an avaliable IP address from your private subnet
+  - You add VPC information to your lambda function config using the vpc-config parameter.
+  - \$ aws lambda update-function-configuration --function-name my-function --vpc-config SubnetIds=subent-1122aabb,SecurityGroupIds=sg-51530134

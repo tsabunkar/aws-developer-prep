@@ -130,3 +130,62 @@
 - Import from Swagger or Open API 3
 - Select Swagger file
   (Thus, we can import exisiting Swagger file while creating API Gateway)
+
+---
+
+# Lambda Version
+
+- Lambda > Functions
+- Create function
+- Author from scratch
+- Function name: my-lambda
+- Runtime: Node
+- Create function
+- Function code
+  - Actions
+  - (select) Upload a .zip file [./version/v1.zip]
+  - save
+- Configure test event
+- Event name: TE1 > create
+- Test
+- Qualifiers > (select) Version \$LATEST
+- Actions > Publish new version > Publish
+- Lambda > Functions > my-lambda
+- Function code
+  - Actions
+  - (select) Upload a .zip file [./version/v2.zip]
+  - (Change some code)
+  - save
+- Test
+- Qualifiers > (select) Version \$LATEST
+- Actions > Publish new version > Publish
+
+---
+
+# Lambda and VPCs
+
+- Lambda > Functions
+- Create function
+- Author from scratch
+- Function name: vpc-lambda
+- Runtime: Node
+- Create function
+- Function code
+  - Actions
+  - (select) Upload a .zip file [./version/v1.zip]
+  - save
+- Configure test event
+- Event name: TE1 > create
+- Test
+- VPC > Edit
+  - Custom VPC:
+    - (check - [.assets/vpc-selection.png])
+    - Save
+    - (Error: The provided execution role does not have permissions to call CreateNetworkInterface on EC2)
+      (
+      - Lambda > Functions > vpc-lambda
+      - Edit basic settings
+      - Execution role > Create a new role from AWS policy templates
+      - Role name: vpc-lambda-role
+      - save
+        )
