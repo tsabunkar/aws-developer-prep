@@ -51,3 +51,44 @@
     - Max 12 hours
   - Short polling- returned immediately even if no messages are in the queue
   - Long polling- polls the queue periodically and only returns a response when a message is in the queue or the timeout is reached
+
+---
+
+# SQS Delay Queues
+
+- SQS Delay Queues -postpone delivery of new messages
+- Postpone delivery of new messages to a queue for a number of seconds
+- Messages sent to the Delay Queue remain invisible to consumers for the duration of the delay period
+- Default delay is 0 seconds, maximum is 900 sec
+- For standard queues, changing the setiing doesn't affect the delay of messages already in the queue, only new messages
+- For FIFO queues, this affects the delay of messages already in the queue
+- When should you use a Delay Queue ?
+  - Large distributed applications which may need to introduce a delay in processing
+  - You need to apply a delay to an entier queue of messages
+  - ex: Adding a delay of few seconds, to allow for updates to your sales and stock control db before sending a notification to a customer confirming an online transaction
+
+---
+
+# Managing Large SQS Messages
+
+- Best Practice For Managing Large SQS Messages Using S3
+  - For Large SQS messages - 256KB up to 2GB in size
+  - Use S3 to store the messages
+  - Use Amazon SQS Extended Client Library for Java to manage them (messages)
+  - (You'll also need the AWS SDK for Java)- provides an API for S3 bucket and object operations
+- SQS Extended Client Library for Java allows you to:
+  - Specify that messages are always stored in Amazon S3 or only messages > 256KB
+  - Send a message which references a message object stored in S3
+  - Get a messages object from S3
+  - Delete a message object from S3
+- Exam Tips:
+  - Postpone delivery of new messages
+  - Messages in Delay Queue remain invisible for the duration of the delay period (0-900s)
+  - Large distributed applications which may need to introduce a delay in processing
+  - Managing Large Messages in S3
+    - Store large messages - 256KB - 2GB in S3
+    - Need to use :
+      - AWS SDK for Java
+      - Amazon SQS extended Client Library for Java
+    - Cannot use:
+      - AWS CLI, AWS Management Console/SQS Console, SQS API
