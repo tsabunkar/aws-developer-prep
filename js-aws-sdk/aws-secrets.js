@@ -18,7 +18,6 @@ fetchScretesFromScretesManager = async function () {
     const response = await client.send(command);
     const parsedResponse = JSON.parse(response.SecretString);
     console.log(parsedResponse);
-    console.log(data);
   } catch (error) {
     // error handling.
   } finally {
