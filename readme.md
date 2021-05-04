@@ -68,3 +68,37 @@ REF:
   - https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf
   - https://d1.awsstatic.com/whitepapers/optimizing-enterprise-economics-serverless-architectures.pdf
   - https://d1.awsstatic.com/whitepapers/Security/AWS_Security_Best_Practices.pdf
+
+---
+
+# Adding a billing Alarm to recieve email notifications when thershould is reached (CloudWatch)
+
+- Goto Billing & cost Management Dashboard: https://console.aws.amazon.com/billing/home?#/
+- Preferences > Billing preferences
+- Receive Billing Alerts (select this checkbox)
+- Save preferences
+- (Create a billing Alaram)
+  - Goto Cloudwatch : https://console.aws.amazon.com/cloudwatch
+  - Click Alarms
+  - Create Alarm
+  - Graph > (click) Select Metric
+  - Metrics (search for)- Billing > By Service
+  - Select: AmazonRDS USD EstimatedCharges
+  - select metric
+  - Conditions :
+    - Threshold type : Static
+    - Whenever EstimatedCharges is.. : Greater
+    - than.. : 13 USD (1000 rupees)
+    - Next
+  - Alarm State Trigger:
+    - (If no previously topic created for email notification) then
+      - Select an SNS topic: Create new topic
+      - Send a notification to : AWS-BILLING-MORE-THAN-1k
+      - email: tsabunkar@gmail.com
+      - Next
+  - Alarm Name and description
+    - Alarm name: RDSInstanceBillAlert
+    - Alarm Description: RDS Instance Billing had exceed more than 1K rupees or 13 USD
+    - Next
+  - Create Alaram
+  - Goto Gmail - You will recieve a mail from AWS for confirmation on Amazon SNS notification service (confirm it)
