@@ -42,6 +42,11 @@ https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-wa
     - Default region name: us-east-1 [US East (N. Virginia)]
     - Default output format: json
   - \$ aws s3 ls
+- Install aws cli locally in ur macos :
+  - \$ curl "https://awscli.amazonaws.com/AWSCLIV2-2.0.30.pkg" -o "AWSCLIV2.pkg"
+  - \$ sudo installer -pkg AWSCLIV2.pkg -target /
+  - \$ which aws
+  - \$ aws --version
 
 REF:
 
