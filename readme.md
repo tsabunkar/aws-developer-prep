@@ -107,3 +107,28 @@ REF:
     - Next
   - Create Alaram
   - Goto Gmail - You will recieve a mail from AWS for confirmation on Amazon SNS notification service (confirm it)
+
+---
+
+# Command to To identify all running AWS services outside of the us-east-1a Availability Zone across your account (For EC2)
+
+- \$ for region in $(aws ec2 describe-regions --query "Regions[].RegionName" --output text); do
+  echo "Checking region: $region"
+  aws ec2 describe-instances --region $region \
+   --query "Reservations[].Instances[].[InstanceId,Placement.AvailabilityZone]" \
+   --output table
+  done
+
+## For all the AWS Services
+
+- \$ for region in $(aws ec2 describe-regions --query "Regions[].RegionName" --output text); do
+  echo "Region: $region"
+
+  aws ec2 describe-instances --region $region \
+   --query "Reservations[].Instances[?Placement.AvailabilityZone!='us-east-1a'].[InstanceId,Placement.AvailabilityZone]" \
+   --output table
+
+  aws rds describe-db-instances --region $region \
+   --query "DBInstances[?AvailabilityZone!='us-east-1a'].[DBInstanceIdentifier,AvailabilityZone]" \
+   --output table
+  done
